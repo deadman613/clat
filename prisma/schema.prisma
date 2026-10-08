@@ -1,0 +1,687 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum CourseMode {
+  ONLINE
+  OFFLINE
+  HYBRID
+}
+
+enum CourseType {
+  CLAT
+  AILET
+  BOTH
+}
+
+enum CourseCategory {
+  FOUNDATION
+  DROPPER
+  CRASH_COURSE
+  POWER_BATCH
+  COMBO
+  TEST_SERIES
+}
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum TestType {
+  FULL_LENGTH
+  SECTIONAL
+  SUBJECT_WISE
+  CURRENT_AFFAIRS
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+  REFUNDED
+}
+
+enum MaterialType {
+  PDF
+  VIDEO
+  NOTES
+  PREVIOUS_YEAR
+}
+
+enum CurrentAffairCategory {
+  LEGAL_NEWS
+  NATIONAL
+  INTERNATIONAL
+  ECONOMY
+  AWARDS
+  GOVERNMENT_SCHEMES
+  APPOINTMENTS
+  SPORTS
+  ENVIRONMENT
+  SCIENCE_TECH
+}
+
+// ============================================================
+// USER & AUTH
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(STUDENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts       Account[]
+  sessions       Session[]
+  studentProfile StudentProfile?
+  enrollments    CourseEnrollment[]
+  testAttempts   TestAttempt[]
+  quizAttempts   QuizAttempt[]
+  notifications  Notification[]
+  payments       Payment[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================================
+// STUDENT PROFILE
+// ============================================================
+
+model StudentProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  phone       String?
+  class       String?
+  city        String?
+  state       String?
+  targetYear  Int?
+  targetExam  String?
+  studyStreak Int      @default(0)
+  rank        Int?
+  totalScore  Float    @default(0)
+  accuracy    Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("student_profiles")
+}
+
+// ============================================================
+// COURSES
+// ============================================================
+
+model Course {
+  id               String         @id @default(cuid())
+  slug             String         @unique
+  name             String
+  shortDescription String
+  description      String
+  category         CourseCategory
+  type             CourseType
+  mode             CourseMode
+  duration         String
+  totalClasses     Int
+  recordedLectures Int
+  mockTests        Int
+  studyMaterial    Boolean        @default(true)
+  mentorship       Boolean        @default(false)
+  price            Float
+  discountPrice    Float?
+  isActive         Boolean        @default(true)
+  isFeatured       Boolean        @default(false)
+  thumbnail        String?
+  brochureUrl      String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  batches       Batch[]
+  enrollments   CourseEnrollment[]
+  faculty       CourseFaculty[]
+  testimonials  Testimonial[]
+  studyMaterials StudyMaterial[]
+
+  @@index([slug])
+  @@index([category])
+  @@index([type])
+  @@map("courses")
+}
+
+model Batch {
+  id          String   @id @default(cuid())
+  courseId    String
+  name        String
+  startDate   DateTime
+  endDate     DateTime
+  timing      String
+  seats       Int
+  enrolled    Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrollments CourseEnrollment[]
+
+  @@index([courseId])
+  @@map("batches")
+}
+
+model CourseEnrollment {
+  id          String   @id @default(cuid())
+  userId      String
+  courseId    String
+  batchId     String?
+  progress    Float    @default(0)
+  isActive    Boolean  @default(true)
+  enrolledAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id])
+  batch   Batch?  @relation(fields: [batchId], references: [id])
+  payment Payment?
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@map("course_enrollments")
+}
+
+// ============================================================
+// FACULTY
+// ============================================================
+
+model Faculty {
+  id           String   @id @default(cuid())
+  name         String
+  subject      String
+  qualification String
+  experience   Int
+  bio          String
+  photo        String?
+  nluBackground String?
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  courses CourseFaculty[]
+
+  @@map("faculty")
+}
+
+model CourseFaculty {
+  courseId  String
+  facultyId String
+
+  course  Course  @relation(fields: [courseId], references: [id])
+  faculty Faculty @relation(fields: [facultyId], references: [id])
+
+  @@id([courseId, facultyId])
+  @@map("course_faculty")
+}
+
+// ============================================================
+// TESTS
+// ============================================================
+
+model Test {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  description String?
+  type        TestType
+  difficulty  DifficultyLevel
+  duration    Int        // in minutes
+  totalMarks  Float
+  questions   Int
+  isFree      Boolean    @default(false)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  questionsList Question[]
+  attempts      TestAttempt[]
+
+  @@index([slug])
+  @@index([type])
+  @@map("tests")
+}
+
+model Question {
+  id          String          @id @default(cuid())
+  testId      String
+  text        String
+  explanation String?
+  section     String?
+  marks       Float           @default(1)
+  negMarks    Float           @default(0.25)
+  difficulty  DifficultyLevel @default(MEDIUM)
+  sortOrder   Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  test    Test             @relation(fields: [testId], references: [id], onDelete: Cascade)
+  options QuestionOption[]
+  answers TestAnswer[]
+
+  @@index([testId])
+  @@map("questions")
+}
+
+model QuestionOption {
+  id         String   @id @default(cuid())
+  questionId String
+  text       String
+  isCorrect  Boolean  @default(false)
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  testAnswers TestAnswer[]
+
+  @@index([questionId])
+  @@map("question_options")
+}
+
+model TestAttempt {
+  id            String   @id @default(cuid())
+  userId        String
+  testId        String
+  startedAt     DateTime @default(now())
+  submittedAt   DateTime?
+  totalScore    Float    @default(0)
+  maxScore      Float
+  accuracy      Float    @default(0)
+  timeTaken     Int      @default(0) // in seconds
+  attempted     Int      @default(0)
+  correct       Int      @default(0)
+  incorrect     Int      @default(0)
+  unattempted   Int      @default(0)
+  rank          Int?
+  percentile    Float?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test    Test         @relation(fields: [testId], references: [id])
+  answers TestAnswer[]
+
+  @@index([userId])
+  @@index([testId])
+  @@map("test_attempts")
+}
+
+model TestAnswer {
+  id           String   @id @default(cuid())
+  attemptId    String
+  questionId   String
+  selectedOption String?
+  optionId     String?
+  isCorrect    Boolean  @default(false)
+  marksObtained Float   @default(0)
+  timeTaken    Int      @default(0) // in seconds
+  markedReview Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  attempt  TestAttempt    @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question       @relation(fields: [questionId], references: [id])
+  option   QuestionOption? @relation(fields: [optionId], references: [id])
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@map("test_answers")
+}
+
+// ============================================================
+// CURRENT AFFAIRS
+// ============================================================
+
+model CurrentAffair {
+  id             String                @id @default(cuid())
+  slug           String                @unique
+  title          String
+  summary        String
+  content        String
+  category       CurrentAffairCategory
+  importantFacts String[]
+  clatRelevance  String?
+  publishedAt    DateTime              @default(now())
+  imageUrl       String?
+  isActive       Boolean               @default(true)
+  views          Int                   @default(0)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  quizQuestions CurrentAffairQuiz[]
+
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+  @@map("current_affairs")
+}
+
+model CurrentAffairQuiz {
+  id              String   @id @default(cuid())
+  currentAffairId String?
+  title           String
+  questions       Int      @default(0)
+  date            DateTime @default(now())
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  currentAffair CurrentAffair? @relation(fields: [currentAffairId], references: [id])
+  quizQuestions QuizQuestion[]
+  attempts      QuizAttempt[]
+
+  @@map("current_affair_quizzes")
+}
+
+model QuizQuestion {
+  id          String   @id @default(cuid())
+  quizId      String
+  text        String
+  optionA     String
+  optionB     String
+  optionC     String
+  optionD     String
+  correctOption String  // A, B, C, or D
+  explanation String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  quiz    CurrentAffairQuiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([quizId])
+  @@map("quiz_questions")
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  quizId      String
+  score       Int      @default(0)
+  total       Int
+  submittedAt DateTime @default(now())
+  answers     Json     // stored as { questionId: selectedOption }
+
+  user User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz CurrentAffairQuiz @relation(fields: [quizId], references: [id])
+
+  @@index([userId])
+  @@index([quizId])
+  @@map("quiz_attempts")
+}
+
+// ============================================================
+// STUDY MATERIAL
+// ============================================================
+
+model StudyMaterial {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  subject     String
+  type        MaterialType
+  fileUrl     String
+  fileSize    String?
+  difficulty  DifficultyLevel @default(MEDIUM)
+  courseId    String?
+  isFree      Boolean         @default(false)
+  downloads   Int             @default(0)
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  course Course? @relation(fields: [courseId], references: [id])
+
+  @@index([subject])
+  @@index([type])
+  @@map("study_materials")
+}
+
+// ============================================================
+// BLOG
+// ============================================================
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  excerpt      String
+  content      String
+  category     String
+  author       String
+  authorImage  String?
+  featuredImage String?
+  readTime     Int      @default(5)
+  tags         String[]
+  isPublished  Boolean  @default(false)
+  views        Int      @default(0)
+  publishedAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+  @@map("blog_posts")
+}
+
+// ============================================================
+// RESULTS / SUCCESS STORIES
+// ============================================================
+
+model Result {
+  id          String   @id @default(cuid())
+  studentName String
+  photo       String?
+  rank        Int
+  nlu         String
+  score       Float?
+  year        Int
+  testimonial String?
+  exam        String   @default("CLAT")
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([year])
+  @@index([rank])
+  @@map("results")
+}
+
+// ============================================================
+// TESTIMONIALS
+// ============================================================
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  studentName  String
+  photo        String?
+  rating       Int      @default(5)
+  text         String
+  courseId     String?
+  nlu          String?
+  year         Int?
+  isActive     Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  course Course? @relation(fields: [courseId], references: [id])
+
+  @@map("testimonials")
+}
+
+// ============================================================
+// FAQ
+// ============================================================
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String   @default("General")
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("faqs")
+}
+
+// ============================================================
+// ENQUIRY / COUNSELLING
+// ============================================================
+
+model Enquiry {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  phone          String
+  class          String?
+  exam           String?
+  preferredCourse String?
+  message        String?
+  isResolved     Boolean  @default(false)
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([email])
+  @@index([createdAt])
+  @@map("enquiries")
+}
+
+// ============================================================
+// PAYMENT
+// ============================================================
+
+model Payment {
+  id             String        @id @default(cuid())
+  userId         String
+  enrollmentId   String?       @unique
+  amount         Float
+  currency       String        @default("INR")
+  status         PaymentStatus @default(PENDING)
+  gatewayOrderId String?
+  gatewayPayId   String?
+  receipt        String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  user       User              @relation(fields: [userId], references: [id])
+  enrollment CourseEnrollment? @relation(fields: [enrollmentId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@map("payments")
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
+// ============================================================
+// SITE STATS (admin-managed)
+// ============================================================
+
+model SiteStat {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  label     String
+  icon      String?
+  sortOrder Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@map("site_stats")
+}

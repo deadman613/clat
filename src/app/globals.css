@@ -1,0 +1,345 @@
+@import "tailwindcss";
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — LEXASCENT DESIGN SYSTEM
+   ============================================================ */
+
+:root {
+  /* Brand Colors */
+  --navy-950: #050d1a;
+  --navy-900: #0a1628;
+  --navy-800: #0f2040;
+  --navy-700: #152a55;
+  --navy-600: #1b3569;
+  --royal-700: #1540a0;
+  --royal-600: #1d4ed8;
+  --royal-500: #2563eb;
+  --royal-400: #3b82f6;
+  --royal-300: #60a5fa;
+  --gold-700: #b45309;
+  --gold-600: #d97706;
+  --gold-500: #f59e0b;
+  --gold-400: #fbbf24;
+  --gold-300: #fcd34d;
+
+  /* Semantic */
+  --color-primary: var(--navy-900);
+  --color-secondary: var(--royal-600);
+  --color-accent: var(--gold-600);
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+
+  /* Typography */
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-playfair {
+  font-family: var(--font-playfair);
+}
+
+.heading-display {
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* ============================================================
+   GRADIENTS
+   ============================================================ */
+
+.gradient-navy {
+  background: linear-gradient(135deg, #050d1a 0%, #0f2040 50%, #152a55 100%);
+}
+
+.gradient-royal {
+  background: linear-gradient(135deg, #1540a0 0%, #2563eb 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
+}
+
+.gradient-hero {
+  background: linear-gradient(
+    135deg,
+    #050d1a 0%,
+    #0f2040 40%,
+    #152a55 70%,
+    #1b3569 100%
+  );
+}
+
+.gradient-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-royal {
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   GLASSMORPHISM
+   ============================================================ */
+
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-dark {
+  background: rgba(10, 22, 40, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(37, 99, 235, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes counter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #f59e0b 25%, #fbbf24 50%, #f59e0b 75%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d4ed8;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1540a0;
+}
+
+/* Section */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* Cards */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1540a0, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(29, 78, 216, 0.4);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #b45309, #d97706);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
+}
+
+.btn-outline {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Input focus styles */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.container-custom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding: 0 3rem;
+  }
+}
+
+/* Divider with gradient */
+.divider-gold {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+  border: none;
+}
+
+/* Star rating */
+.star-filled {
+  color: #f59e0b;
+  fill: #f59e0b;
+}
+
+.star-empty {
+  color: #e5e7eb;
+}
