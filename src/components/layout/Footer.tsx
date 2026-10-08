@@ -135,7 +135,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-              India's premier law entrance preparation platform. Trusted by 50,000+ aspiring law students across India for CLAT, AILET, and all NLU admissions.
+              India  premier law entrance preparation platform. Trusted by 50,000+ aspiring law students across India for CLAT, AILET, and all NLU admissions.
             </p>
 
             {/* Contact Info */}
