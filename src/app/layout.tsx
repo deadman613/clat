@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
@@ -9,9 +9,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const serif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["400", "600", "700"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -81,8 +82,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-inter antialiased bg-white text-slate-900">
+    <html lang="en" className={`${inter.variable} ${serif.variable}`}>
+      <body className="antialiased" style={{ background: "var(--color-paper)", color: "var(--color-ink)" }}>
         {children}
         <Toaster position="top-right" richColors />
       </body>

@@ -2,146 +2,206 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Trophy, GraduationCap, Star, Filter } from "lucide-react";
-
-const results = [
-  { name: "Vikram Singh", rank: 3, nlu: "NLU Delhi", year: 2024, exam: "CLAT", initials: "VS", color: "from-amber-500 to-orange-600", testimonial: "LexAscent's Power Batch is unmatched. The faculty's dedication is extraordinary." },
-  { name: "Priya Sharma", rank: 12, nlu: "NLU Delhi", year: 2024, exam: "CLAT", initials: "PS", color: "from-blue-500 to-blue-700", testimonial: "Daily current affairs module saved me at least 20 marks in CLAT." },
-  { name: "Ananya Gupta", rank: 8, nlu: "NUJS Kolkata", year: 2024, exam: "CLAT", initials: "AG", color: "from-violet-500 to-purple-700", testimonial: "Legal reasoning classes here are on another level." },
-  { name: "Aryan Kapoor", rank: 18, nlu: "NALSAR", year: 2024, exam: "CLAT", initials: "AK", color: "from-emerald-500 to-teal-600", testimonial: "The mock tests are tougher than the actual exam — which is exactly what you need." },
-  { name: "Sneha Reddy", rank: 27, nlu: "NLSIU Bangalore", year: 2024, exam: "CLAT", initials: "SR", color: "from-rose-500 to-pink-600", testimonial: "From AIR 200+ to AIR 27 in 6 months — all thanks to LexAscent." },
-  { name: "Karan Mehta", rank: 31, nlu: "GNLU", year: 2024, exam: "CLAT", initials: "KM", color: "from-indigo-500 to-indigo-700", testimonial: "The analytics dashboard showed me exactly where I was losing marks." },
-  { name: "Aditya Mishra", rank: 1, nlu: "NLU Delhi", year: 2023, exam: "AILET", initials: "AM", color: "from-amber-400 to-amber-600", testimonial: "Secured AIR 1 in AILET — LexAscent's AILET-specific preparation was key." },
-  { name: "Kavya Nair", rank: 5, nlu: "NALSAR", year: 2023, exam: "CLAT", initials: "KN", color: "from-teal-500 to-cyan-600", testimonial: "The mentorship sessions gave me the confidence I needed." },
-  { name: "Rohan Bajaj", rank: 22, nlu: "NLU Jodhpur", year: 2023, exam: "CLAT", initials: "RB", color: "from-sky-500 to-blue-600", testimonial: "Best investment I made for my CLAT preparation." },
-  { name: "Divya Sharma", rank: 45, nlu: "RMLNLU", year: 2023, exam: "CLAT", initials: "DS", color: "from-pink-500 to-rose-600", testimonial: "Dropped a year and chose LexAscent — best decision ever." },
-];
+import { Search, Trophy } from "lucide-react";
 
 const years = ["All Years", "2024", "2023", "2022"];
-const exams = ["All Exams", "CLAT", "AILET"];
+const exams  = ["All Exams", "CLAT", "AILET"];
+
+const toppers = [
+  { initials: "AS", name: "Ananya Sharma",  rank: "AIR 3",  nlu: "NLSIU Bangalore", year: 2024, exam: "CLAT" },
+  { initials: "RG", name: "Rishi Gupta",    rank: "AIR 7",  nlu: "NALSAR Hyderabad",year: 2024, exam: "CLAT" },
+  { initials: "PN", name: "Priya Nair",     rank: "AIR 12", nlu: "NLU Delhi",        year: 2024, exam: "CLAT" },
+  { initials: "AM", name: "Arjun Mehta",    rank: "AIR 19", nlu: "NUJS Kolkata",     year: 2024, exam: "CLAT" },
+  { initials: "DK", name: "Divya Kapoor",   rank: "AIR 2",  nlu: "NLU Delhi",        year: 2024, exam: "AILET" },
+  { initials: "SS", name: "Siddharth Singh",rank: "AIR 45", nlu: "NLU Jodhpur",      year: 2024, exam: "CLAT" },
+];
+
+const allResults = [
+  ...toppers,
+  { initials: "MK", name: "Meera Krishnan", rank: "AIR 58",  nlu: "GNLU Gandhinagar",  year: 2024, exam: "CLAT" },
+  { initials: "VP", name: "Varun Patel",    rank: "AIR 72",  nlu: "RMLNLU Lucknow",    year: 2024, exam: "CLAT" },
+  { initials: "KR", name: "Kiran Rao",      rank: "AIR 14",  nlu: "NALSAR Hyderabad",  year: 2023, exam: "CLAT" },
+  { initials: "TS", name: "Tanvi Shah",     rank: "AIR 28",  nlu: "NLSIU Bangalore",   year: 2023, exam: "CLAT" },
+  { initials: "AN", name: "Aditya Nair",    rank: "AIR 4",   nlu: "NLU Delhi",         year: 2023, exam: "AILET" },
+  { initials: "PG", name: "Pooja Gupta",    rank: "AIR 91",  nlu: "HNLU Raipur",       year: 2023, exam: "CLAT" },
+];
 
 export default function ResultsClient() {
-  const [yearFilter, setYearFilter] = useState("All Years");
-  const [examFilter, setExamFilter] = useState("All Exams");
+  const [year, setYear]   = useState("All Years");
+  const [exam, setExam]   = useState("All Exams");
+  const [search, setSearch] = useState("");
 
-  const filtered = results.filter((r) => {
-    const matchYear = yearFilter === "All Years" || r.year.toString() === yearFilter;
-    const matchExam = examFilter === "All Exams" || r.exam === examFilter;
-    return matchYear && matchExam;
+  const filtered = allResults.filter((r) => {
+    const byYear = year === "All Years" || r.year === parseInt(year);
+    const byExam = exam === "All Exams" || r.exam === exam;
+    const byQ    = search === "" || r.name.toLowerCase().includes(search.toLowerCase()) ||
+                   r.nlu.toLowerCase().includes(search.toLowerCase());
+    return byYear && byExam && byQ;
   });
 
-  const top3 = filtered.filter((r) => r.rank <= 5);
-  const rest = filtered.filter((r) => r.rank > 5);
+  const top6 = toppers.filter((r) => {
+    const byYear = year === "All Years" || r.year === parseInt(year);
+    const byExam = exam === "All Exams" || r.exam === exam;
+    return byYear && byExam;
+  });
 
   return (
-    <div className="pt-16 min-h-screen bg-slate-50">
-      {/* Hero */}
-      <div className="gradient-hero py-16">
+    <>
+      {/* Header */}
+      <div className="section-padding gradient-hero">
         <div className="container-custom text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="inline-block px-4 py-1.5 rounded-full glass border border-white/10 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-              Our Achievers
-            </span>
-            <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-white mb-4">
-              1000+ Top NLU Selections
-            </h1>
-            <p className="text-blue-200/70 max-w-xl mx-auto mb-8">
-              Every year, LexAscent students dominate the CLAT and AILET merit lists. Here are some of our finest achievers.
-            </p>
-            {/* Aggregate stats */}
-            <div className="flex flex-wrap justify-center gap-6">
-              {[
-                { label: "Top 10 Ranks (2024)", value: "6+" },
-                { label: "Top 50 Ranks (2024)", value: "28+" },
-                { label: "Total Selections", value: "1000+" },
-                { label: "NLUs Covered", value: "24/24" },
-              ].map((s) => (
-                <div key={s.label} className="text-center glass border border-white/10 rounded-xl px-5 py-3">
-                  <div className="text-2xl font-bold text-amber-400 font-playfair">{s.value}</div>
-                  <div className="text-blue-200/60 text-xs mt-0.5">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3"
+            style={{ color: "var(--color-gold-light)", fontFamily: "var(--font-inter)" }}>
+            Student Results
+          </p>
+          <h1 className="heading-display text-3xl sm:text-4xl mb-2" style={{ color: "#fff" }}>
+            Our Students. Top NLUs.
+          </h1>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Verified selections from CLAT 2024, 2023 and 2022.
+          </p>
         </div>
       </div>
 
-      <div className="container-custom py-12">
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-3 mb-8">
-          <Filter className="w-4 h-4 text-slate-400" />
-          {years.map((y) => (
-            <button key={y} onClick={() => setYearFilter(y)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${yearFilter === y ? "bg-blue-600 text-white" : "bg-white text-slate-600 border border-slate-200 hover:border-blue-300"}`}>
-              {y}
-            </button>
-          ))}
-          <div className="w-px h-5 bg-slate-200" />
-          {exams.map((e) => (
-            <button key={e} onClick={() => setExamFilter(e)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${examFilter === e ? "bg-slate-800 text-white" : "bg-white text-slate-600 border border-slate-200 hover:border-slate-400"}`}>
-              {e}
-            </button>
-          ))}
-        </div>
+      {/* Filters */}
+      <div className="band-surface py-5 border-b" style={{ borderColor: "var(--color-border)" }}>
+        <div className="container-custom flex flex-wrap items-center gap-4">
+          {/* Search */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "var(--color-muted)" }} />
+            <input value={search} onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or NLU…"
+              style={{ paddingLeft: "2.25rem", width: 220 }} />
+          </div>
 
-        {/* Top 3 — Podium style */}
-        {top3.length > 0 && (
-          <div className="mb-10">
-            <h2 className="font-playfair text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-amber-500" /> Top Achievers
-            </h2>
-            <div className="grid sm:grid-cols-3 gap-4">
-              {top3.map((r, i) => (
-                <motion.div key={r.name} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1 }}
-                  className={`relative bg-gradient-to-br ${r.color} rounded-2xl p-6 text-white text-center shadow-xl`}>
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="flex items-center gap-1 bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full shadow">
-                      <Trophy className="w-3 h-3" /> AIR {r.rank}
+          {/* Year chips */}
+          <div className="flex flex-wrap gap-2">
+            {years.map((y) => (
+              <button key={y} onClick={() => setYear(y)}
+                className="px-3 py-1.5 rounded-full text-sm font-medium transition-colors"
+                style={{
+                  background: year === y ? "var(--color-primary)" : "var(--color-paper)",
+                  color: year === y ? "#fff" : "var(--color-muted)",
+                  border: `1px solid ${year === y ? "var(--color-primary)" : "var(--color-border)"}`,
+                }}>
+                {y}
+              </button>
+            ))}
+          </div>
+
+          {/* Exam chips */}
+          <div className="flex flex-wrap gap-2">
+            {exams.map((e) => (
+              <button key={e} onClick={() => setExam(e)}
+                className="px-3 py-1.5 rounded-full text-sm font-medium transition-colors"
+                style={{
+                  background: exam === e ? "var(--color-ink)" : "var(--color-paper)",
+                  color: exam === e ? "#fff" : "var(--color-muted)",
+                  border: `1px solid ${exam === e ? "var(--color-ink)" : "var(--color-border)"}`,
+                }}>
+                {e}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Top achievers */}
+      {top6.length > 0 && (
+        <section className="section-padding band-surface">
+          <div className="container-custom">
+            <div className="flex items-center gap-2 mb-6">
+              <Trophy className="w-5 h-5" style={{ color: "var(--color-gold)" }} />
+              <h2 className="heading-display text-xl">Top Achievers</h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {top6.map(({ initials, name, rank, nlu, year: y, exam: e }, i) => (
+                <motion.div key={name + y}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07 }}>
+                  <div className="card p-4 text-center">
+                    <div className="rounded-[var(--radius)] mx-auto mb-3 flex items-center justify-center text-white font-bold text-lg"
+                      style={{
+                        width: "100%",
+                        aspectRatio: "4/5",
+                        maxHeight: 120,
+                        background: "linear-gradient(160deg, var(--color-primary-dark), var(--color-primary))",
+                        fontFamily: "var(--font-serif)",
+                      }}>
+                      {initials}
+                    </div>
+                    <p className="text-sm font-semibold mb-0.5" style={{ fontFamily: "var(--font-serif)", color: "var(--color-ink)" }}>
+                      {name}
+                    </p>
+                    <p className="text-base font-bold mb-0.5" style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
+                      {rank}
+                    </p>
+                    <p className="text-xs" style={{ color: "var(--color-muted)" }}>{nlu}</p>
+                    <span className="text-xs px-2 py-0.5 rounded-full mt-1 inline-block"
+                      style={{ background: "var(--color-surface)", color: "var(--color-muted)", border: "1px solid var(--color-border)" }}>
+                      {e} {y}
                     </span>
                   </div>
-                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xl mx-auto mb-3 mt-3">
-                    {r.initials}
-                  </div>
-                  <h3 className="font-bold text-lg mb-1">{r.name}</h3>
-                  <div className="flex items-center justify-center gap-1 text-white/80 text-sm mb-3">
-                    <GraduationCap className="w-4 h-4" /> {r.nlu} · {r.year}
-                  </div>
-                  <p className="text-white/70 text-xs italic">"{r.testimonial}"</p>
                 </motion.div>
               ))}
             </div>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Rest of results */}
-        <h2 className="font-playfair text-xl font-bold text-slate-900 mb-4">All Selections</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {rest.map((r, i) => (
-            <motion.div key={r.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-white rounded-2xl border border-slate-100 p-5 text-center hover:shadow-lg transition-all hover:-translate-y-1 group">
-              <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${r.color} flex items-center justify-center text-white font-bold text-base mx-auto mb-3 group-hover:scale-110 transition-transform`}>
-                {r.initials}
-              </div>
-              <div className="text-2xl font-bold text-slate-900 font-playfair">AIR {r.rank}</div>
-              <div className="font-semibold text-slate-700 text-sm mt-0.5">{r.name}</div>
-              <div className="flex items-center justify-center gap-1 text-slate-400 text-xs mt-1">
-                <GraduationCap className="w-3 h-3" /> {r.nlu}
-              </div>
-              <div className="mt-1">
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${r.exam === "AILET" ? "bg-rose-50 text-rose-600" : "bg-blue-50 text-blue-600"}`}>
-                  {r.exam} {r.year}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+      {/* Full table */}
+      <section className="section-padding" style={{ background: "#fff" }}>
+        <div className="container-custom">
+          <h2 className="heading-display text-xl mb-6">All Selections ({filtered.length})</h2>
+          <div className="rounded-[var(--radius)] overflow-hidden"
+            style={{ border: "1px solid var(--color-border)" }}>
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ background: "var(--color-ink)", color: "#fff" }}>
+                  {["Student", "Rank", "NLU", "Exam", "Year"].map((h) => (
+                    <th key={h} className="text-left px-4 py-3 font-semibold text-xs uppercase tracking-wider"
+                      style={{ fontFamily: "var(--font-inter)" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map(({ initials, name, rank, nlu, exam: e, year: y }, i) => (
+                  <tr key={name + y}
+                    style={{
+                      background: i % 2 === 0 ? "#fff" : "var(--color-paper)",
+                      borderBottom: "1px solid var(--color-border)",
+                    }}>
+                    <td className="px-4 py-3 font-semibold" style={{ color: "var(--color-ink)" }}>
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                          style={{ background: "var(--color-primary)", fontFamily: "var(--font-serif)" }}>
+                          {initials}
+                        </div>
+                        {name}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 font-bold" style={{ color: "var(--color-primary)", fontFamily: "var(--font-serif)" }}>
+                      {rank}
+                    </td>
+                    <td className="px-4 py-3" style={{ color: "var(--color-muted)" }}>{nlu}</td>
+                    <td className="px-4 py-3">
+                      <span className="pill"
+                        style={{ background: "rgba(107,30,46,0.08)", color: "var(--color-primary)" }}>
+                        {e}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3" style={{ color: "var(--color-muted)" }}>{y}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-16 text-slate-400">No results match the selected filters.</div>
-        )}
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

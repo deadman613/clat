@@ -1,130 +1,150 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About LexAscent — India's Premier CLAT Coaching Platform",
+  title: "About LexAscent — 30 Years of Creating India's Best Lawyers",
   description:
-    "Learn about LexAscent — our mission, history, and the team behind India's most trusted CLAT and law entrance preparation platform.",
+    "Learn about LexAscent's history, mission, and values. 30+ years, 50,000+ students, 1,000+ NLU selections.",
 };
 
 const milestones = [
-  { year: "1994", event: "Founded as a small CLAT coaching centre in New Delhi with 30 students" },
-  { year: "2005", event: "Expanded to 5 cities across India; first batch of 100+ top-100 selections" },
-  { year: "2012", event: "Launched online learning platform — pioneering digital CLAT prep in India" },
-  { year: "2018", event: "Surpassed 20,000 students milestone; opened centers in 12 states" },
-  { year: "2021", event: "Launched AI-powered performance analytics and personalized mock tests" },
-  { year: "2024", event: "50,000+ students trained; 1000+ NLU selections; India's #1 CLAT platform" },
+  { year: "1994", event: "Founded as a classroom coaching centre in New Delhi with 30 students." },
+  { year: "2005", event: "Expanded to 5 cities; first batch achieved 100+ top-100 CLAT selections." },
+  { year: "2012", event: "Launched online learning — pioneering digital CLAT prep in India." },
+  { year: "2018", event: "Surpassed 20,000 students milestone; centres in 12 states." },
+  { year: "2021", event: "Launched AI-powered performance analytics and adaptive mock tests." },
+  { year: "2024", event: "50,000+ students trained; 1,000+ NLU selections; India's #1 CLAT platform." },
 ];
 
 const values = [
-  { icon: "🎯", title: "Excellence", desc: "We relentlessly pursue the highest standards in teaching, content, and student outcomes." },
-  { icon: "🤝", title: "Accessibility", desc: "Quality CLAT preparation should be accessible to every deserving student, regardless of geography or background." },
-  { icon: "💡", title: "Innovation", desc: "We continuously innovate — from AI analytics to adaptive learning — to give our students every edge." },
-  { icon: "❤️", title: "Student-First", desc: "Every decision we make is guided by one question: how does this help our students succeed?" },
+  { icon: "Excellence",    desc: "We relentlessly pursue the highest standards in teaching and student outcomes." },
+  { icon: "Accessibility", desc: "Quality CLAT preparation must be accessible to every deserving student." },
+  { icon: "Innovation",    desc: "We continuously evolve — from AI analytics to adaptive learning." },
+  { icon: "Student-First", desc: "Every decision is guided by one question: how does this help our students?" },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <Navbar />
-      <main className="pt-16">
-        {/* Hero */}
-        <div className="gradient-hero py-16">
-          <div className="container-custom text-center max-w-3xl mx-auto">
-            <span className="inline-block px-4 py-1.5 rounded-full glass border border-white/10 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-              About Us
-            </span>
-            <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-white mb-4">
-              30 Years of Creating India's Best Lawyers
-            </h1>
-            <p className="text-blue-200/70 text-lg">
-              From a small classroom in New Delhi to India's most trusted law entrance preparation platform — this is our story.
-            </p>
+      {/* Header */}
+      <div className="section-padding gradient-hero">
+        <div className="container-custom text-center max-w-2xl mx-auto">
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3"
+            style={{ color: "var(--color-gold-light)", fontFamily: "var(--font-inter)" }}>
+            About Us
+          </p>
+          <h1 className="heading-display text-3xl sm:text-4xl mb-3" style={{ color: "#fff" }}>
+            30 Years of Creating India's Best Lawyers
+          </h1>
+          <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+            From a small classroom in New Delhi to India's most trusted law entrance platform.
+          </p>
+        </div>
+      </div>
+
+      {/* Mission */}
+      <section className="section-padding" style={{ background: "#fff" }}>
+        <div className="container-custom max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-2"
+                style={{ color: "var(--color-gold)", fontFamily: "var(--font-inter)" }}>
+                Our Mission
+              </p>
+              <h2 className="heading-display text-2xl sm:text-3xl mb-2">Why We Exist</h2>
+              <div className="rule" />
+              <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--color-muted)" }}>
+                At LexAscent, we believe the law profession needs the brightest minds — and those minds need the best preparation. Our mission is to democratise access to world-class CLAT coaching and help every deserving student unlock the doors of India's top National Law Universities.
+              </p>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                We don't just teach — we mentor, motivate, and walk alongside our students throughout their entire law entrance journey.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { value: "30+",    label: "Years of Excellence" },
+                { value: "50,000+",label: "Students Trained" },
+                { value: "1,000+", label: "NLU Selections" },
+                { value: "24/24",  label: "NLUs Covered" },
+              ].map((s) => (
+                <div key={s.label} className="rounded-[var(--radius)] p-5 text-center"
+                  style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}>
+                  <div className="text-3xl font-semibold mb-1"
+                    style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
+                    {s.value}
+                  </div>
+                  <p className="text-xs" style={{ color: "var(--color-muted)" }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Mission */}
-        <section className="py-16 bg-white">
-          <div className="container-custom max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="font-playfair text-3xl font-bold text-slate-900 mb-4">Our Mission</h2>
-                <p className="text-slate-600 leading-relaxed mb-4">
-                  At LexAscent, we believe that the law profession needs the brightest minds — and those minds need the best preparation. Our mission is simple: democratize access to world-class CLAT coaching and help every deserving student unlock the doors of India's top National Law Universities.
-                </p>
-                <p className="text-slate-600 leading-relaxed">
-                  We don't just teach — we mentor, motivate, and walk alongside our students throughout their law entrance journey. Because a student's success is not just their achievement; it's ours too.
-                </p>
+      {/* Values */}
+      <section className="section-padding band-surface">
+        <div className="container-custom max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="heading-display text-2xl sm:text-3xl mb-1">Our Values</h2>
+            <div className="rule mx-auto" />
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
+            {values.map(({ icon, desc }) => (
+              <div key={icon} className="card p-5 text-center">
+                <h3 className="text-base font-semibold mb-2"
+                  style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
+                  {icon}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>{desc}</p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { value: "30+", label: "Years of Excellence" },
-                  { value: "50K+", label: "Students Trained" },
-                  { value: "1000+", label: "NLU Selections" },
-                  { value: "24/24", label: "NLUs Covered" },
-                ].map((s) => (
-                  <div key={s.label} className="p-5 rounded-2xl bg-slate-50 border border-slate-100 text-center">
-                    <div className="text-3xl font-bold text-blue-700 font-playfair mb-1">{s.value}</div>
-                    <div className="text-xs text-slate-500">{s.label}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline */}
+      <section className="section-padding" style={{ background: "#fff" }}>
+        <div className="container-custom max-w-2xl">
+          <div className="text-center mb-10">
+            <h2 className="heading-display text-2xl sm:text-3xl mb-1">Our Journey</h2>
+            <div className="rule mx-auto" />
+          </div>
+          <div className="relative pl-8 space-y-6"
+            style={{ borderLeft: "2px solid var(--color-border)" }}>
+            {milestones.map(({ year, event }) => (
+              <div key={year} className="relative">
+                <div className="absolute -left-[2.4rem] w-4 h-4 rounded-full"
+                  style={{ background: "var(--color-primary)", border: "3px solid #fff", boxShadow: "0 0 0 1px var(--color-primary)" }} />
+                <div className="rounded-[var(--radius)] p-4"
+                  style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}>
+                  <div className="text-xs font-bold mb-1"
+                    style={{ color: "var(--color-gold)", fontFamily: "var(--font-inter)" }}>
+                    {year}
                   </div>
-                ))}
+                  <p className="text-sm" style={{ color: "var(--color-ink)" }}>{event}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Values */}
-        <section className="py-16 bg-slate-50">
-          <div className="container-custom max-w-4xl">
-            <h2 className="font-playfair text-3xl font-bold text-slate-900 mb-10 text-center">Our Values</h2>
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {values.map((v) => (
-                <div key={v.title} className="bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm hover:shadow-md transition-shadow">
-                  <div className="text-4xl mb-3">{v.icon}</div>
-                  <h3 className="font-bold text-slate-900 mb-2">{v.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{v.desc}</p>
-                </div>
-              ))}
-            </div>
+      {/* CTA */}
+      <section className="section-padding" style={{ background: "var(--color-primary)" }}>
+        <div className="container-custom text-center">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ fontFamily: "var(--font-serif)", color: "#fff" }}>
+            Ready to Write Your Success Story?
+          </h2>
+          <p className="text-sm mb-7" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Join 50,000+ students who chose LexAscent for their CLAT journey.
+          </p>
+          <div className="flex justify-center gap-4 flex-wrap">
+            <a href="/courses" className="btn btn-outline-white">Explore Courses</a>
+            <a href="/enquiry" className="btn" style={{ background: "var(--color-gold)", color: "#fff" }}>
+              Book Free Counselling
+            </a>
           </div>
-        </section>
-
-        {/* Timeline */}
-        <section className="py-16 bg-white">
-          <div className="container-custom max-w-3xl">
-            <h2 className="font-playfair text-3xl font-bold text-slate-900 mb-10 text-center">Our Journey</h2>
-            <div className="relative pl-8 border-l-2 border-blue-100 space-y-8">
-              {milestones.map((m, i) => (
-                <div key={m.year} className="relative">
-                  <div className="absolute -left-[2.55rem] w-5 h-5 rounded-full bg-blue-600 border-4 border-white shadow" />
-                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                    <div className="text-amber-600 font-bold text-sm mb-1">{m.year}</div>
-                    <p className="text-slate-700 text-sm">{m.event}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-16 bg-gradient-to-r from-blue-700 to-blue-900">
-          <div className="container-custom text-center">
-            <h2 className="font-playfair text-3xl font-bold text-white mb-4">Ready to Write Your Success Story?</h2>
-            <p className="text-blue-200/70 mb-8">Join 50,000+ students who chose LexAscent for their CLAT journey.</p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              <a href="/courses" className="px-6 py-3 rounded-xl bg-amber-500 text-white font-semibold hover:bg-amber-400 transition-colors">
-                Explore Courses
-              </a>
-              <a href="/enquiry" className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/20 transition-colors">
-                Book Free Counselling
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
+        </div>
+      </section>
     </>
   );
 }

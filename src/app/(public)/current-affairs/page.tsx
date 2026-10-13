@@ -1,22 +1,12 @@
 import { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import CurrentAffairsClient from "./CurrentAffairsClient";
 
 export const metadata: Metadata = {
   title: "Daily Current Affairs for CLAT 2025 — LexAscent",
   description:
-    "Daily, weekly, and monthly current affairs for CLAT preparation. Legal news, national, international, economy, and more — with CLAT relevance analysis.",
+    "Daily CLAT-focused current affairs with relevance analysis. Legal news, polity, economy, environment — curated for CLAT aspirants.",
 };
 
 export default function CurrentAffairsPage() {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <CurrentAffairsClient />
-      </main>
-      <Footer />
-    </>
-  );
+  return <CurrentAffairsClient />;
 }
