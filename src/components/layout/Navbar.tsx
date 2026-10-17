@@ -1,49 +1,29 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X, BookOpen, FlaskConical, Newspaper } from "lucide-react";
-
-const resourcesLinks = [
-  { label: "Study Material", href: "/study-material", icon: BookOpen },
-  { label: "Test Series",    href: "/mock-tests",     icon: FlaskConical },
-  { label: "Current Affairs",href: "/current-affairs",icon: Newspaper },
-];
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Courses",  href: "/courses" },
-  { label: "Faculty",  href: "/faculty" },
-  { label: "Results",  href: "/results" },
-  { label: "CLAT Guide", href: "/exam/clat" },
-  { label: "About",    href: "/about" },
+  { label: "Programs", href: "/courses" },
+  { label: "Our approach", href: "/#approach" },
+  { label: "Mentorship", href: "/#mentorship" },
+  { label: "The reading room", href: "/#reading-room" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
   const pathname = usePathname();
-  const dropRef = useRef<HTMLDivElement>(null);
-
-  /* close dropdown on outside click */
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
-        setResourcesOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="bg-[var(--color-paper)] border-b border-[var(--color-border)] sticky top-0 z-50">
-      <div className="container-custom flex items-center h-16 gap-6">
+    <header className="bg-[var(--color-paper)] border-b border-[var(--color-border)] sticky top-0 z-50 editorial-navbar">
+      <div className="container-custom flex items-center h-16 gap-6 editorial-navbar__inner">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 mr-4">
-          <div className="w-8 h-8 rounded-[var(--radius)] flex items-center justify-center"
+          <div className="editorial-logo-mark"
             style={{ background: "var(--color-primary)" }}>
             <span className="text-white font-bold text-sm" style={{ fontFamily: "var(--font-serif)" }}>L</span>
           </div>
@@ -54,10 +34,10 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1 flex-1">
+        <nav className="hidden md:flex items-center gap-1 flex-1 editorial-navbar__links">
           {navLinks.map(({ label, href }) => (
             <Link key={label} href={href}
-              className={`px-3 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap
+              className={`px-3 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap editorial-navbar__link
                 ${isActive(href)
                   ? "text-[var(--color-primary)] bg-[var(--color-surface)]"
                   : "text-[var(--color-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface)]"
@@ -66,38 +46,12 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Resources dropdown */}
-          <div className="relative" ref={dropRef}>
-            <button
-              onClick={() => setResourcesOpen(!resourcesOpen)}
-              className={`flex items-center gap-1 px-3 py-2 rounded text-sm font-medium transition-colors
-                ${resourcesOpen
-                  ? "text-[var(--color-primary)] bg-[var(--color-surface)]"
-                  : "text-[var(--color-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface)]"
-                }`}>
-              Resources
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${resourcesOpen ? "rotate-180" : ""}`} />
-            </button>
-
-            {resourcesOpen && (
-              <div className="absolute top-full left-0 mt-1 w-52 card shadow-lg py-1 z-50">
-                {resourcesLinks.map(({ label, href, icon: Icon }) => (
-                  <Link key={label} href={href}
-                    onClick={() => setResourcesOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--color-ink)] hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)] transition-colors">
-                    <Icon className="w-4 h-4 text-[var(--color-gold)]" />
-                    {label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
         </nav>
 
         {/* Single CTA */}
         <div className="hidden md:block ml-auto flex-shrink-0">
-          <Link href="/enquiry" className="btn btn-primary text-sm">
-            Book Free Demo
+          <Link href="/#consultation" className="btn btn-primary text-sm editorial-navbar__cta">
+            Speak to an advisor <span aria-hidden="true">↗</span>
           </Link>
         </div>
 
@@ -122,20 +76,10 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
-            <div className="mt-1 border-t border-[var(--color-border)] pt-2">
-              <p className="px-3 py-1 text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider">Resources</p>
-              {resourcesLinks.map(({ label, href }) => (
-                <Link key={label} href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center px-3 py-3 text-sm text-[var(--color-ink)]">
-                  {label}
-                </Link>
-              ))}
-            </div>
             <div className="pt-2">
-              <Link href="/enquiry" onClick={() => setMobileOpen(false)}
+              <Link href="/#consultation" onClick={() => setMobileOpen(false)}
                 className="btn btn-primary w-full">
-                Book Free Demo
+                Speak to an advisor
               </Link>
             </div>
           </nav>
