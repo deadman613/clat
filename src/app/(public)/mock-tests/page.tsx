@@ -212,7 +212,7 @@ export default function MockTestInterface() {
             <h1 className="font-playfair text-2xl font-bold text-slate-900 mb-2">
               {sampleTest.title}
             </h1>
-            <p className="text-slate-500 text-sm">Free Sample Mock Test — LexAscent</p>
+            <p className="text-slate-500 text-sm">Free Sample Mock Test — Delhi Law School</p>
           </div>
 
           <div className="grid grid-cols-3 gap-3 mb-6">

@@ -56,7 +56,7 @@ export default function HeroSection() {
               }}>
               <Image
                 src="/images/hero-student.jpg"
-                alt="LexAscent student studying law"
+                alt="Delhi Law School student studying law"
                 fill
                 className="object-cover"
                 priority

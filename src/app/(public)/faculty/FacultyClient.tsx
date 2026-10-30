@@ -53,7 +53,7 @@ const facultyData = [
     qualification: "MA Philosophy, BHU",
     experience: "10 years",
     subject: "Logical Reasoning",
-    bio: "Critical thinking specialist. Her Logical Reasoning shortcuts are legendary among LexAscent alumni.",
+    bio: "Critical thinking specialist. Her Logical Reasoning shortcuts are legendary among Delhi Law School alumni.",
   },
 ];
 

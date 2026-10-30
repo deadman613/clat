@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { CheckCircle2, Phone, Mail, Camera } from "lucide-react";
 import { toast } from "sonner";
+import { BUSINESS_CONTACT } from "@/lib/site-details";
 
 const classOptions = ["Class 11", "Class 12", "Dropper / Repeater", "Passed 12th (gap year)", "Other"];
 const examOptions  = ["CLAT 2025", "CLAT 2026", "AILET 2025", "Both CLAT & AILET", "Not decided yet"];
@@ -90,7 +91,7 @@ export default function EnquiryClient() {
                         Phone Number *
                       </label>
                       <input name="phone" type="tel" value={form.phone} onChange={set}
-                        placeholder="+91 98765 43210" required />
+                        placeholder={BUSINESS_CONTACT.phone.display} required />
                     </div>
                     <div>
                       <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
@@ -134,11 +135,10 @@ export default function EnquiryClient() {
               </div>
 
               {[
-                { icon: Phone,  label: "Call Us",  text: "+91 98765 43210", href: "tel:+919876543210" },
-                { icon: Mail,   label: "Email",    text: "hello@lexascent.in", href: "mailto:hello@lexascent.in" },
-                { icon: MapPin, label: "Address",  text: "304, Law Tower, Janpath, New Delhi — 110001", href: null },
-                { icon: Clock,  label: "Office Hours", text: "Mon–Sat, 9 am – 7 pm", href: null },
-              ].map(({ icon: Icon, label, text, href }) => (
+                { icon: Phone, label: "Call Us", ...BUSINESS_CONTACT.phone },
+                { icon: Mail, label: "Email", ...BUSINESS_CONTACT.email },
+                { icon: Camera, label: "Instagram", ...BUSINESS_CONTACT.instagram },
+              ].map(({ icon: Icon, label, display, href }) => (
                 <div key={label} className="flex items-start gap-4 p-4 rounded-[var(--radius)]"
                   style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)" }}>
                   <div className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center flex-shrink-0"
@@ -150,10 +150,8 @@ export default function EnquiryClient() {
                       style={{ color: "var(--color-muted)", fontFamily: "var(--font-inter)" }}>
                       {label}
                     </p>
-                    {href
-                      ? <a href={href} className="text-sm font-medium hover:underline"
-                          style={{ color: "var(--color-primary)" }}>{text}</a>
-                      : <p className="text-sm" style={{ color: "var(--color-ink)" }}>{text}</p>}
+                    <a href={href} className="text-sm font-medium hover:underline"
+                      style={{ color: "var(--color-primary)" }}>{display}</a>
                   </div>
                 </div>
               ))}

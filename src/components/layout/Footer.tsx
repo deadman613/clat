@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BUSINESS_CONTACT, BUSINESS_NAME } from "@/lib/site-details";
 
 const columns = [
   {
@@ -24,7 +25,7 @@ const columns = [
     links: [
       { label: "Speak to an advisor", href: "/#consultation" },
       { label: "Find your program", href: "/courses" },
-      { label: "About LexAscent", href: "/about" },
+      { label: `About ${BUSINESS_NAME}`, href: "/about" },
       { label: "Contact us", href: "/enquiry" },
     ],
   },
@@ -37,14 +38,27 @@ export default function Footer() {
         <div className="editorial-footer__main">
           <div className="editorial-footer__brand">
             <Link href="/" className="editorial-footer__logo">
-              <span aria-hidden="true">L</span>
-              LexAscent
+              <span aria-hidden="true">D</span>
+              {BUSINESS_NAME}
             </Link>
             <p className="editorial-footer__motto">Think deeply. Aim higher.</p>
             <p>
               Thoughtful preparation for CLAT and AILET, and the legal mind
               you&apos;re building along the way.
             </p>
+            <div className="mt-4 space-y-1 text-sm">
+              <p>
+                <a href={BUSINESS_CONTACT.phone.href}>{BUSINESS_CONTACT.phone.display}</a>
+              </p>
+              <p>
+                <a href={BUSINESS_CONTACT.email.href}>{BUSINESS_CONTACT.email.display}</a>
+              </p>
+              <p>
+                <a href={BUSINESS_CONTACT.instagram.href} target="_blank" rel="noreferrer">
+                  {BUSINESS_CONTACT.instagram.display}
+                </a>
+              </p>
+            </div>
           </div>
           <div className="editorial-footer__columns">
             {columns.map((column) => (
@@ -62,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="editorial-footer__bottom">
-          <span>© {new Date().getFullYear()} LexAscent. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {BUSINESS_NAME}. All rights reserved.</span>
           <div>
             <Link href="/privacy-policy">Privacy Policy</Link>
             <Link href="/terms">Terms of use</Link>

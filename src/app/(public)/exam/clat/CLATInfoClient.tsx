@@ -255,7 +255,7 @@ export default function CLATInfoClient() {
             {/* CTA */}
             <div className="p-5 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white">
               <h3 className="font-semibold mb-2">Start Your CLAT Preparation</h3>
-              <p className="text-blue-100 text-sm mb-4">Join LexAscent and crack CLAT with expert guidance.</p>
+              <p className="text-blue-100 text-sm mb-4">Join Delhi Law School and crack CLAT with expert guidance.</p>
               <Link
                 href="/courses"
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-white text-blue-700 font-semibold text-sm hover:bg-blue-50 transition-colors"

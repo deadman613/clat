@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About LexAscent — 30 Years of Creating India's Best Lawyers",
+  title: "About Delhi Law School — 30 Years of Creating India's Best Lawyers",
   description:
-    "Learn about LexAscent's history, mission, and values. 30+ years, 50,000+ students, 1,000+ NLU selections.",
+    "Learn about Delhi Law School's history, mission, and values. 30+ years, 50,000+ students, 1,000+ NLU selections.",
 };
 
 const milestones = [
@@ -53,7 +53,7 @@ export default function AboutPage() {
               <h2 className="heading-display text-2xl sm:text-3xl mb-2">Why We Exist</h2>
               <div className="rule" />
               <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--color-muted)" }}>
-                At LexAscent, we believe the law profession needs the brightest minds — and those minds need the best preparation. Our mission is to democratise access to world-class CLAT coaching and help every deserving student unlock the doors of India's top National Law Universities.
+                At Delhi Law School, we believe the law profession needs the brightest minds — and those minds need the best preparation. Our mission is to democratise access to world-class CLAT coaching and help every deserving student unlock the doors of India's top National Law Universities.
               </p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
                 We don't just teach — we mentor, motivate, and walk alongside our students throughout their entire law entrance journey.
@@ -135,7 +135,7 @@ export default function AboutPage() {
             Ready to Write Your Success Story?
           </h2>
           <p className="text-sm mb-7" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Join 50,000+ students who chose LexAscent for their CLAT journey.
+            Join 50,000+ students who chose Delhi Law School for their CLAT journey.
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <a href="/courses" className="btn btn-outline-white">Explore Courses</a>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { BUSINESS_NAME } from "@/lib/site-details";
 
 const navLinks = [
   { label: "Programs", href: "/courses" },
@@ -25,11 +26,11 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 mr-4">
           <div className="editorial-logo-mark"
             style={{ background: "var(--color-primary)" }}>
-            <span className="text-white font-bold text-sm" style={{ fontFamily: "var(--font-serif)" }}>L</span>
+            <span className="text-white font-bold text-sm" style={{ fontFamily: "var(--font-serif)" }}>D</span>
           </div>
           <span className="font-semibold text-lg hidden sm:block"
             style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
-            LexAscent
+            {BUSINESS_NAME}
           </span>
         </Link>
 

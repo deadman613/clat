@@ -235,7 +235,7 @@ async function main() {
 
   // ── Testimonials ─────────────────────────────────────────────
   const testimonialData = [
-    { studentName: "Vikram Singh", text: "LexAscent's Power Batch is unmatched. I secured AIR 3 in CLAT 2024 thanks to the incredible faculty and structured curriculum.", nlu: "NLU Delhi", year: 2024, rating: 5, sortOrder: 1 },
+    { studentName: "Vikram Singh", text: "Delhi Law School's Power Batch is unmatched. I secured AIR 3 in CLAT 2024 thanks to the incredible faculty and structured curriculum.", nlu: "NLU Delhi", year: 2024, rating: 5, sortOrder: 1 },
     { studentName: "Priya Sharma", text: "The daily current affairs module alone saved me at least 20 marks in CLAT. Best coaching platform I have used.", nlu: "NLU Delhi", year: 2024, rating: 5, sortOrder: 2 },
     { studentName: "Aryan Kapoor", text: "Mock tests are tougher than the actual exam — which is exactly what serious CLAT preparation needs.", nlu: "NALSAR", year: 2024, rating: 5, sortOrder: 3 },
     { studentName: "Sneha Reddy", text: "Went from AIR 200+ to AIR 27 in 6 months using the Dropper Batch. The personalized strategy was the game-changer.", nlu: "NLSIU Bangalore", year: 2024, rating: 5, sortOrder: 4 },
@@ -249,7 +249,7 @@ async function main() {
 
   // ── Results ──────────────────────────────────────────────────
   const resultData = [
-    { studentName: "Vikram Singh", rank: 3, nlu: "NLU Delhi", year: 2024, exam: "CLAT", testimonial: "LexAscent's Power Batch is unmatched.", sortOrder: 1 },
+    { studentName: "Vikram Singh", rank: 3, nlu: "NLU Delhi", year: 2024, exam: "CLAT", testimonial: "Delhi Law School's Power Batch is unmatched.", sortOrder: 1 },
     { studentName: "Priya Sharma", rank: 12, nlu: "NLU Delhi", year: 2024, exam: "CLAT", testimonial: "Daily current affairs module saved me.", sortOrder: 2 },
     { studentName: "Aryan Kapoor", rank: 18, nlu: "NALSAR", year: 2024, exam: "CLAT", testimonial: "Mock tests tougher than actual CLAT.", sortOrder: 3 },
     { studentName: "Aditya Mishra", rank: 1, nlu: "NLU Delhi", year: 2023, exam: "AILET", testimonial: "Secured AIR 1 in AILET!", sortOrder: 4 },
@@ -297,7 +297,7 @@ async function main() {
     { question: "What is CLAT and who conducts it?", answer: "CLAT is the Common Law Admission Test conducted by the Consortium of NLUs for admission to 24 National Law Universities across India.", category: "About CLAT", sortOrder: 1 },
     { question: "What is the eligibility for CLAT?", answer: "Class 12 passed or appearing with 45% marks (40% for SC/ST). No upper age limit.", category: "Eligibility", sortOrder: 2 },
     { question: "How many mock tests should I attempt?", answer: "We recommend at least 30-40 full-length mocks along with thorough analysis of each test.", category: "Preparation", sortOrder: 3 },
-    { question: "What courses does LexAscent offer?", answer: "Foundation, Dropper, Crash Course, Power Batch, AILET, and CLAT+AILET Combo programs.", category: "Courses", sortOrder: 4 },
+    { question: "What courses does Delhi Law School offer?", answer: "Foundation, Dropper, Crash Course, Power Batch, AILET, and CLAT+AILET Combo programs.", category: "Courses", sortOrder: 4 },
   ];
 
   for (const faq of faqs) {

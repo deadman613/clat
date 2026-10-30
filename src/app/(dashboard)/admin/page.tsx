@@ -136,7 +136,7 @@ export default function AdminDashboard() {
               <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">AD</div>
               <div className="hidden sm:block">
                 <div className="text-xs font-semibold text-slate-800">Admin</div>
-                <div className="text-[10px] text-slate-400">admin@lexascent.in</div>
+                <div className="text-[10px] text-slate-400">delhilawschool@gmail.com</div>
               </div>
             </div>
           </div>
@@ -296,6 +296,5 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
 
 

@@ -262,7 +262,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!course) return { title: "Course Not Found" };
 
   return {
-    title: `${course.name} — LexAscent`,
+    title: `${course.name} — Delhi Law School`,
     description: course.description,
   };
 }

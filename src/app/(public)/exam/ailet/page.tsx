@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AILET 2025 — Exam Pattern, Eligibility & Preparation | LexAscent",
+  title: "AILET 2025 — Exam Pattern, Eligibility & Preparation | Delhi Law School",
   description:
     "Complete guide to AILET — All India Law Entrance Test for NLU Delhi. Exam pattern, syllabus, eligibility, important dates, and preparation tips.",
 };
@@ -136,7 +136,7 @@ export default function AILETPage() {
               </div>
 
               <div className="p-5 rounded-xl bg-blue-600 text-white">
-                <h3 className="font-semibold mb-2">💡 LexAscent Recommends</h3>
+                <h3 className="font-semibold mb-2">💡 Delhi Law School Recommends</h3>
                 <p className="text-blue-100 text-sm mb-3">Target CLAT + AILET together for maximum options and best shot at NLU Delhi.</p>
                 <a href="/courses/clat-ailet-combo"
                   className="block w-full text-center py-2.5 rounded-lg bg-white text-blue-700 font-semibold text-sm hover:bg-blue-50 transition-colors">

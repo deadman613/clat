@@ -13,7 +13,7 @@ const testimonials = [
     initials: "PS",
     color: "from-blue-500 to-blue-700",
     rating: 5,
-    text: "LexAscent completely transformed my CLAT preparation. The faculty here are exceptional — they don't just teach; they mentor. Their daily current affairs module saved me at least 20 marks in the exam. Highly recommend!",
+    text: "Delhi Law School completely transformed my CLAT preparation. The faculty here are exceptional — they don't just teach; they mentor. Their daily current affairs module saved me at least 20 marks in the exam. Highly recommend!",
     course: "CLAT Power Batch",
   },
   {
@@ -24,7 +24,7 @@ const testimonials = [
     initials: "AM",
     color: "from-emerald-500 to-teal-600",
     rating: 5,
-    text: "As a dropper, I was quite demotivated. But LexAscent's structured approach and the support from mentors completely turned things around. The mock test series is incredibly close to the actual CLAT paper.",
+    text: "As a dropper, I was quite demotivated. But Delhi Law School's structured approach and the support from mentors completely turned things around. The mock test series is incredibly close to the actual CLAT paper.",
     course: "CLAT Dropper Batch",
   },
   {
@@ -35,7 +35,7 @@ const testimonials = [
     initials: "AG",
     color: "from-violet-500 to-purple-700",
     rating: 5,
-    text: "The legal reasoning classes at LexAscent are on another level. The faculty breaks down complex passages into simple patterns. The mock tests are tough — tougher than the actual exam — which is exactly what you need.",
+    text: "The legal reasoning classes at Delhi Law School are on another level. The faculty breaks down complex passages into simple patterns. The mock tests are tough — tougher than the actual exam — which is exactly what you need.",
     course: "CLAT Power Batch",
   },
   {
@@ -57,7 +57,7 @@ const testimonials = [
     initials: "NJ",
     color: "from-rose-500 to-pink-600",
     rating: 5,
-    text: "The student dashboard at LexAscent is incredible. I could track my progress, see exactly where I was losing marks, and focus my preparation. The analytics helped me go from AIR 200+ to AIR 21 in 6 months.",
+    text: "The student dashboard at Delhi Law School is incredible. I could track my progress, see exactly where I was losing marks, and focus my preparation. The analytics helped me go from AIR 200+ to AIR 21 in 6 months.",
     course: "CLAT Foundation",
   },
   {
@@ -68,7 +68,7 @@ const testimonials = [
     initials: "VS",
     color: "from-indigo-500 to-indigo-700",
     rating: 5,
-    text: "Secured AIR 3 in CLAT. LexAscent's systematic approach to legal reasoning and their comprehensive current affairs program were the keys to my success. The faculty genuinely cares about each student's performance.",
+    text: "Secured AIR 3 in CLAT. Delhi Law School's systematic approach to legal reasoning and their comprehensive current affairs program were the keys to my success. The faculty genuinely cares about each student's performance.",
     course: "CLAT Power Batch",
   },
 ];
@@ -93,7 +93,7 @@ export default function TestimonialsSection() {
             Words From Our NLU Selections
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto">
-            Hear from students who cracked CLAT and secured their dream NLU with LexAscent.
+            Hear from students who cracked CLAT and secured their dream NLU with Delhi Law School.
           </p>
         </motion.div>
 
@@ -153,7 +153,7 @@ export default function TestimonialsSection() {
           className="text-center mt-12"
         >
           <p className="text-slate-400 mb-4 text-sm">
-            Join 1000+ students who secured their dream NLU through LexAscent
+            Join 1000+ students who secured their dream NLU through Delhi Law School
           </p>
           <a
             href="/results"

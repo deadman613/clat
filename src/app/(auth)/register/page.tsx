@@ -55,7 +55,7 @@ export default function RegisterPage() {
         <div className="glass border border-white/10 rounded-2xl p-8 shadow-2xl">
           <div className="text-center mb-6">
             <h1 className="font-playfair text-2xl font-bold text-white mb-1">Create Account</h1>
-            <p className="text-blue-200/60 text-sm">Join 50,000+ law aspirants on LexAscent</p>
+            <p className="text-blue-200/60 text-sm">Join 50,000+ law aspirants on Delhi Law School</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

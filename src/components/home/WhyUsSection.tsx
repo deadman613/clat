@@ -85,7 +85,7 @@ export default function WhyUsSection() {
           className="text-center mb-14"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-amber-50 text-amber-700 text-xs font-semibold tracking-wider uppercase mb-3">
-            Why LexAscent
+            Why Delhi Law School
           </span>
           <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
             India's Most Trusted CLAT Coaching

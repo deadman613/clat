@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { CheckCircle2 } from "lucide-react";
+import { BUSINESS_CONTACT } from "@/lib/site-details";
 
 const classOptions = ["Class 11", "Class 12", "Dropper / Repeater", "Other"];
 const examOptions  = ["CLAT 2025", "CLAT 2026", "AILET 2025", "Both CLAT & AILET"];
@@ -81,7 +82,7 @@ export default function CounsellingSection() {
                   </label>
                   <input
                     name="phone" type="tel" value={form.phone} onChange={handleChange}
-                    placeholder="+91 98765 43210"
+                    placeholder={BUSINESS_CONTACT.phone.display}
                     required
                     style={{ display: "block", width: "100%" }}
                   />

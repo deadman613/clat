@@ -25,7 +25,7 @@ const faqs = [
     a: "We offer a 7-day full refund from the date of enrolment if you have attended fewer than 3 classes. Partial refunds are available up to 30 days as per our Refund Policy.",
   },
   {
-    q: "Does LexAscent also prepare students for AILET?",
+    q: "Does Delhi Law School also prepare students for AILET?",
     a: "Yes. We run a dedicated AILET Preparation course and our faculty includes alumni from NLU Delhi. AILET students can also access the CLAT Power Batch since the syllabi overlap significantly.",
   },
 ];

@@ -11,7 +11,7 @@ const results = [
     nlu: "NLSIU Bangalore",
     year: "CLAT 2024",
     initials: "AS",
-    quote: "LexAscent's mock tests were harder than the actual CLAT. By exam day I was completely calm.",
+    quote: "Delhi Law School's mock tests were harder than the actual CLAT. By exam day I was completely calm.",
   },
   {
     name: "Rishi Gupta",
@@ -27,7 +27,7 @@ const results = [
     nlu: "NLU Delhi",
     year: "CLAT 2024",
     initials: "PN",
-    quote: "My mentor at LexAscent knew exactly when I needed to push harder and when to ease off. That balance made all the difference.",
+    quote: "My mentor at Delhi Law School knew exactly when I needed to push harder and when to ease off. That balance made all the difference.",
   },
   {
     name: "Arjun Mehta",

@@ -261,7 +261,7 @@ export default function FigmaHomePage() {
       <section className="editorial-approach" id="approach">
         <div className="editorial-container editorial-approach__grid">
           <div>
-            <p className="editorial-eyebrow">The LexAscent difference</p>
+            <p className="editorial-eyebrow">The Delhi Law School difference</p>
             <h2>A legal mind is built, not memorised.</h2>
           </div>
           <div className="editorial-approach__copy">
@@ -345,7 +345,7 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-method__heading">
             <div>
-              <p className="editorial-eyebrow">The LexAscent approach</p>
+              <p className="editorial-eyebrow">The Delhi Law School approach</p>
               <h2>A rhythm for meaningful progress.</h2>
             </div>
             <p>
@@ -628,7 +628,7 @@ export default function FigmaHomePage() {
                   type="checkbox"
                 />
                 <span>
-                  I agree to be contacted by LexAscent about this request and
+                  I agree to be contacted by Delhi Law School about this request and
                   have read the <Link href="/privacy-policy">Privacy Policy</Link>.
                 </span>
               </label>
