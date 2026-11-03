@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Clock, Users, FileText, ArrowRight, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Clock, Users, FileText, ArrowRight, SlidersHorizontal } from "lucide-react";
 
 const allCourses = [
   {
@@ -13,6 +13,8 @@ const allCourses = [
     audience: "class11",
     mode: "online",
     category: "individual",
+    classes: ["class11"],
+    onDemand: false,
     desc: "2-year integrated program balancing board preparation and CLAT readiness from the ground up.",
     facts: [
       { icon: Clock,    text: "24 months" },
@@ -28,6 +30,8 @@ const allCourses = [
     audience: "class12",
     mode: "online",
     category: "individual",
+    classes: ["class12"],
+    onDemand: false,
     desc: "Our flagship 12-month intensive batch for serious CLAT aspirants aiming for top-10 NLUs.",
     facts: [
       { icon: Clock,    text: "12 months" },
@@ -43,6 +47,8 @@ const allCourses = [
     audience: "dropper",
     mode: "online",
     category: "individual",
+    classes: [],
+    onDemand: false,
     desc: "Structured re-attempt strategy with advanced mock analytics and one-on-one mentoring.",
     facts: [
       { icon: Clock,    text: "10 months" },
@@ -58,6 +64,8 @@ const allCourses = [
     audience: "class12",
     mode: "online",
     category: "individual",
+    classes: ["class12"],
+    onDemand: false,
     desc: "3-month sprint for students who need structured revision and test practice before the exam.",
     facts: [
       { icon: Clock,    text: "3 months" },
@@ -73,6 +81,8 @@ const allCourses = [
     audience: "ailet",
     mode: "online",
     category: "individual",
+    classes: [],
+    onDemand: false,
     desc: "Dedicated NLU Delhi prep with faculty who are NALSAR and NLU Delhi alumni.",
     facts: [
       { icon: Clock,    text: "8 months" },
@@ -88,6 +98,8 @@ const allCourses = [
     audience: "class12",
     mode: "online",
     category: "combo",
+    classes: ["class12"],
+    onDemand: false,
     desc: "Covers both CLAT and AILET in one plan — maximum flexibility, one fee.",
     facts: [
       { icon: Clock,    text: "12 months" },
@@ -98,44 +110,123 @@ const allCourses = [
   },
 ];
 
-const modeFilters     = ["All Modes", "online", "offline", "test-series"];
-const categoryFilters = ["All Categories", "individual", "combo"];
-const audienceFilters = ["All Students", "class11", "class12", "dropper", "ailet"];
+const filterGroups = [
+  {
+    id: "price",
+    label: "Price",
+    options: [
+      { value: "free", label: "Free" },
+      { value: "paid", label: "Paid" },
+      { value: "on-demand", label: "On-Demand" },
+    ],
+  },
+  {
+    id: "mode",
+    label: "CLAT",
+    options: [
+      { value: "offline", label: "Offline Program" },
+      { value: "online", label: "Online Program" },
+      { value: "test-series", label: "Test Series" },
+    ],
+  },
+  {
+    id: "class",
+    label: "Class",
+    options: [
+      { value: "class9", label: "Class 9" },
+      { value: "class10", label: "Class 10" },
+      { value: "class11", label: "Class 11" },
+      { value: "class12", label: "Class 12" },
+    ],
+  },
+  {
+    id: "audience",
+    label: "Audience",
+    options: [
+      { value: "dropper", label: "Dropper" },
+      { value: "ailet", label: "AILET" },
+    ],
+  },
+  {
+    id: "category",
+    label: "Course Type",
+    options: [
+      { value: "individual", label: "Individual" },
+      { value: "combo", label: "Combo" },
+    ],
+  },
+];
 
-const labelMap: Record<string, string> = {
-  online: "Online / Live", offline: "Face to Face",
-  "test-series": "Test Series",
-  individual: "Individual", combo: "Combo",
-  class11: "Class 11", class12: "Class 12", dropper: "Dropper", ailet: "AILET",
-};
-
-export default function CoursesClientPage() {
-  const [audience, setAudience] = useState("All Students");
-  const [mode,     setMode]     = useState("All Modes");
-  const [category, setCategory] = useState("All Categories");
-
-  const filtered = allCourses.filter((c) => {
-    const byAud = audience === "All Students" || c.audience === audience;
-    const byMode = mode === "All Modes" || c.mode === mode;
-    const byCat  = category === "All Categories" || c.category === category;
-    return byAud && byMode && byCat;
-  });
-
-  const FilterBar = ({ options, value, set }: { options: string[]; value: string; set: (v: string) => void }) => (
-    <div className="flex flex-wrap gap-2">
-      {options.map((opt) => (
-        <button key={opt} onClick={() => set(opt)}
-          className="px-3 py-1.5 rounded-full text-sm font-medium transition-colors"
-          style={{
-            background: value === opt ? "var(--color-primary)" : "var(--color-surface)",
-            color: value === opt ? "#fff" : "var(--color-muted)",
-            border: `1px solid ${value === opt ? "var(--color-primary)" : "var(--color-border)"}`,
-          }}>
-          {labelMap[opt] || opt}
-        </button>
+function FilterOptions({
+  groupId,
+  options,
+  values,
+  onChange,
+}: {
+  groupId: string;
+  options: { value: string; label: string }[];
+  values: string[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="courses-filter__options">
+      {options.map(({ value, label }) => (
+        <label key={value} className="courses-filter__option" htmlFor={`${groupId}-${value}`}>
+          <input
+            id={`${groupId}-${value}`}
+            type="checkbox"
+            checked={values.includes(value)}
+            onChange={() => onChange(value)}
+          />
+          <span>{label}</span>
+        </label>
       ))}
     </div>
   );
+}
+
+export default function CoursesClientPage() {
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
+
+  const toggleFilter = (groupId: string, value: string) => {
+    setSelectedFilters((current) => {
+      const selected = current[groupId] ?? [];
+      const next = selected.includes(value)
+        ? selected.filter((item) => item !== value)
+        : [...selected, value];
+
+      return { ...current, [groupId]: next };
+    });
+  };
+
+  const filtered = allCourses.filter((c) => {
+    return filterGroups.every(({ id }) => {
+      const selected = selectedFilters[id] ?? [];
+      if (selected.length === 0) return true;
+
+      if (id === "price") {
+        return selected.some((value) => {
+          if (value === "free") return c.price === 0;
+          if (value === "paid") return c.price > 0;
+          return value === "on-demand" && c.onDemand;
+        });
+      }
+
+      if (id === "class") {
+        return selected.some((value) => c.classes.includes(value));
+      }
+      if (id === "audience") {
+        return selected.includes(c.audience);
+      }
+      if (id === "category") {
+        return selected.includes(c.category);
+      }
+
+      return selected.includes(c.mode);
+    });
+  });
+
+  const clearFilters = () => setSelectedFilters({});
 
   return (
     <>
@@ -150,98 +241,93 @@ export default function CoursesClientPage() {
             Find Your Course
           </h1>
           <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)", maxWidth: "36rem", margin: "0 auto" }}>
-            Filter by your current class, preferred mode, and course type.
+            Filter by price, program format, class, and course type.
           </p>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="band-surface py-6 border-b" style={{ borderColor: "var(--color-border)" }}>
-        <div className="container-custom space-y-4">
-          <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--color-muted)" }}>
-            <SlidersHorizontal className="w-4 h-4" /> Filters
-          </div>
-          <div className="space-y-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--color-muted)" }}>
-                I am in
-              </p>
-              <FilterBar options={audienceFilters} value={audience} set={setAudience} />
+      <section className="courses-catalog">
+        <div className="container-custom courses-catalog__layout">
+          <aside className="courses-filter" aria-label="Filter courses">
+            <div className="courses-filter__heading">
+              <h2><SlidersHorizontal className="w-4 h-4" /> Filters</h2>
+              <button type="button" onClick={clearFilters}>Clear all</button>
             </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--color-muted)" }}>
-                  Mode
-                </p>
-                <FilterBar options={modeFilters} value={mode} set={setMode} />
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--color-muted)" }}>
-                  Category
-                </p>
-                <FilterBar options={categoryFilters} value={category} set={setCategory} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            {filterGroups.map(({ id, label, options }) => (
+              <details className="courses-filter__group" key={id} open>
+                <summary>
+                  {label}
+                  <ChevronDown aria-hidden="true" />
+                </summary>
+                <FilterOptions
+                  groupId={id}
+                  options={options}
+                  values={selectedFilters[id] ?? []}
+                  onChange={(value) => toggleFilter(id, value)}
+                />
+              </details>
+            ))}
+          </aside>
 
-      {/* Course cards */}
-      <div className="section-padding" style={{ background: "#fff" }}>
-        <div className="container-custom">
-          {filtered.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-lg font-semibold mb-2" style={{ color: "var(--color-primary)", fontFamily: "var(--font-serif)" }}>
-                No courses match your filters
-              </p>
-              <p className="text-sm" style={{ color: "var(--color-muted)" }}>Try adjusting or clearing the filters above.</p>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map(({ tag, name, slug, desc, facts, price }, i) => (
-                <motion.div key={slug}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}>
-                  <article className="card card-hover flex flex-col h-full p-6">
-                    <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full self-start mb-4"
-                      style={{ background: "rgba(107,30,46,0.08)", color: "var(--color-primary)" }}>
-                      {tag}
-                    </span>
-                    <h2 className="text-lg font-semibold mb-2"
-                      style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
-                      {name}
-                    </h2>
-                    <p className="text-sm mb-5 flex-1" style={{ color: "var(--color-muted)", lineHeight: 1.6 }}>{desc}</p>
-                    <ul className="space-y-2 mb-6">
-                      {facts.map(({ icon: Icon, text }) => (
-                        <li key={text} className="flex items-center gap-2.5 text-sm" style={{ color: "var(--color-ink)" }}>
-                          <Icon className="w-4 h-4 flex-shrink-0" style={{ color: "var(--color-gold)" }} />
-                          {text}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="border-t pt-4 flex items-center justify-between"
-                      style={{ borderColor: "var(--color-border)" }}>
-                      <div>
-                        <p className="text-xs mb-0.5" style={{ color: "var(--color-muted)" }}>Starting from</p>
-                        <p className="text-xl font-semibold"
-                          style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
-                          ₹{price.toLocaleString("en-IN")}
-                        </p>
+          <div className="courses-catalog__results" aria-live="polite">
+            <p className="courses-catalog__count">
+              Showing <strong>{filtered.length}</strong> {filtered.length === 1 ? "program" : "programs"}
+            </p>
+            {filtered.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-lg font-semibold mb-2" style={{ color: "var(--color-primary)", fontFamily: "var(--font-serif)" }}>
+                  No courses match your filters
+                </p>
+                <p className="text-sm mb-4" style={{ color: "var(--color-muted)" }}>Try adjusting or clearing the filters.</p>
+                <button type="button" className="btn btn-secondary" onClick={clearFilters}>Clear filters</button>
+              </div>
+            ) : (
+              <div className="courses-catalog__grid">
+                {filtered.map(({ tag, name, slug, desc, facts, price }, i) => (
+                  <motion.div key={slug}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.06 }}>
+                    <article className="card card-hover flex flex-col h-full p-6">
+                      <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full self-start mb-4"
+                        style={{ background: "rgba(0,0,0,0.08)", color: "var(--color-primary)" }}>
+                        {tag}
+                      </span>
+                      <h2 className="text-lg font-semibold mb-2"
+                        style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
+                        {name}
+                      </h2>
+                      <p className="text-sm mb-5 flex-1" style={{ color: "var(--color-muted)", lineHeight: 1.6 }}>{desc}</p>
+                      <ul className="space-y-2 mb-6">
+                        {facts.map(({ icon: Icon, text }) => (
+                          <li key={text} className="flex items-center gap-2.5 text-sm" style={{ color: "var(--color-ink)" }}>
+                            <Icon className="w-4 h-4 flex-shrink-0" style={{ color: "var(--color-gold)" }} />
+                            {text}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="border-t pt-4 flex items-center justify-between"
+                        style={{ borderColor: "var(--color-border)" }}>
+                        <div>
+                          <p className="text-xs mb-0.5" style={{ color: "var(--color-muted)" }}>Starting from</p>
+                          <p className="text-xl font-semibold"
+                            style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
+                            ₹{price.toLocaleString("en-IN")}
+                          </p>
+                        </div>
+                        <Link href={`/courses/${slug}`}
+                          className="btn btn-primary text-sm px-4 flex items-center gap-1.5">
+                          View Course <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
                       </div>
-                      <Link href={`/courses/${slug}`}
-                        className="btn btn-primary text-sm px-4 flex items-center gap-1.5">
-                        View Course <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </article>
-                </motion.div>
-              ))}
-            </div>
-          )}
+                    </article>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BUSINESS_CONTACT, BUSINESS_NAME } from "@/lib/site-details";
+import BrandLogo from "@/components/layout/BrandLogo";
 
 const columns = [
   {
@@ -37,9 +38,8 @@ export default function Footer() {
       <div className="editorial-container">
         <div className="editorial-footer__main">
           <div className="editorial-footer__brand">
-            <Link href="/" className="editorial-footer__logo">
-              <span aria-hidden="true">D</span>
-              {BUSINESS_NAME}
+            <Link href="/" className="editorial-footer__logo" aria-label="Delhi Law School home">
+              <BrandLogo className="brand-logo--footer" />
             </Link>
             <p className="editorial-footer__motto">Think deeply. Aim higher.</p>
             <p>

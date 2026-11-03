@@ -63,7 +63,7 @@ export default function CourseDetailClient({ course }: Props) {
       {/* Hero Banner */}
       <div
         className={`bg-gradient-to-r ${course.color} py-16`}
-        style={{ background: "linear-gradient(135deg, #0f2040, #152a55)" }}
+        style={{ background: "linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))" }}
       >
         <div className="container-custom">
           {/* Breadcrumb */}
@@ -81,7 +81,7 @@ export default function CourseDetailClient({ course }: Props) {
               <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-blue-200 text-xs font-semibold mb-3">
                 {course.type} Preparation
               </span>
-              <h1 className="font-playfair text-4xl font-bold text-white mb-2">
+              <h1 className="font-playfair text-4xl font-bold mb-2" style={{ color: "#fff" }}>
                 {course.name}
               </h1>
               <p className="text-amber-400 font-semibold mb-4">{course.tagline}</p>

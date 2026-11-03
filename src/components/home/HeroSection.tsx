@@ -65,7 +65,7 @@ export default function HeroSection() {
               />
               {/* fallback gradient if image missing */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-                style={{ background: "linear-gradient(180deg, #7D2438 0%, #4A1220 100%)" }}>
+                style={{ background: "linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)" }}>
                 <span className="text-5xl font-bold font-serif mb-2" style={{ color: "var(--color-gold-light)" }}>6+</span>
                 <p className="text-white text-sm font-semibold">Top 10 Ranks in CLAT 2024</p>
                 <hr className="my-3 w-12 border-t border-white/20" />

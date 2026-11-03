@@ -5,6 +5,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
+import FacultySection from "@/components/home/FacultySection";
+import ExamOverview from "@/components/home/ExamOverview";
+
+const studentSuccessStories = [
+  { initials: "AS", name: "Ananya Sharma", rank: "AIR 3", nlu: "NLSIU Bangalore", exam: "CLAT 2024" },
+  { initials: "RG", name: "Rishi Gupta", rank: "AIR 7", nlu: "NALSAR Hyderabad", exam: "CLAT 2024" },
+  { initials: "PN", name: "Priya Nair", rank: "AIR 12", nlu: "NLU Delhi", exam: "CLAT 2024" },
+];
 
 const pathways = [
   {
@@ -63,30 +71,6 @@ const habits = [
   },
 ];
 
-const mentors = [
-  {
-    icon: "◎",
-    title: "The academic mentor",
-    subtitle: "Your preparation, in perspective",
-    body: "A mentor who knows your strengths, study priorities and the questions that sit beyond the syllabus.",
-    note: "Direction · Practice · Reflection",
-  },
-  {
-    icon: "□",
-    title: "The subject guide",
-    subtitle: "The clarity behind each concept",
-    body: "The right subject teacher helps connect ideas, find a reason in a confusing detail, and move forward.",
-    note: "Concepts · Skills · Focus",
-  },
-  {
-    icon: "↗",
-    title: "The practice coach",
-    subtitle: "The next step after every attempt",
-    body: "Thoughtful feedback, strategy and regular practice that turn a result into an action.",
-    note: "Review · Strategy · Progress",
-  },
-];
-
 const readingRoom = [
   {
     category: "Exam perspective",
@@ -116,29 +100,104 @@ const readingRoom = [
 
 const faqs = [
   {
-    question: "Which program is right for me?",
+    question: "When should I start preparing for CLAT or AILET?",
     answer:
-      "Begin with where you are today: your current learning stage, the time you can dedicate, and the exam you are preparing for. Our counsellors can help you compare Foundation, Comprehensive and AILET Focus programs.",
+      "You can begin in Class 11 by building reading and reasoning habits, or start later with a focused plan. The right starting point depends on your current skills, study time, and target exam.",
   },
   {
-    question: "Can I explore programs before joining?",
+    question: "Which program is right for a Class 11 student?",
     answer:
-      "Yes. You can review each program and speak with an advisor before deciding. We will help you understand the learning plan, practice schedule and support available.",
+      "The CLAT Foundation program is designed for early starters who want time to develop strong reading, reasoning, and current-affairs habits. Compare its schedule and course details with an advisor to see if it fits your plans.",
   },
   {
-    question: "How do CLAT and AILET preparation differ?",
+    question: "What if I am currently in Class 12?",
     answer:
-      "There is useful overlap in reading, reasoning and current affairs, but the exams differ in structure and emphasis. Your preparation should make space for both shared foundations and exam-specific practice.",
+      "A comprehensive, exam-focused plan can help you balance school with CLAT and AILET preparation. Your plan should make room for learning concepts, timed practice, and reviewing your attempts.",
   },
   {
-    question: "What does a guided preparation plan include?",
+    question: "Can repeaters or droppers join a program?",
     answer:
-      "A guided plan brings together classes, focused practice, mock tests, review and mentor check-ins. The exact rhythm depends on your program and preparation stage.",
+      "Yes. If you are preparing again, start by identifying which subjects and question types need more attention. An advisor can help you compare available programs and choose a plan for your next attempt.",
   },
   {
-    question: "Where can I find program schedules and fees?",
+    question: "How are CLAT and AILET preparation different?",
     answer:
-      "Send us your details using the form below and an advisor will share current program options, schedules and fees with you.",
+      "Both exams reward strong reading and reasoning, but they have different formats and areas of emphasis. Preparation should cover shared skills as well as practice tailored to each exam.",
+  },
+  {
+    question: "Can I prepare for both CLAT and AILET together?",
+    answer:
+      "Yes. You can build shared foundations in reading, reasoning, and current affairs, then add practice for the question types and format of each exam.",
+  },
+  {
+    question: "What subjects are covered in law entrance preparation?",
+    answer:
+      "Preparation generally includes English and reading comprehension, current affairs and general knowledge, legal reasoning, logical reasoning, and quantitative techniques. The time spent on each area can depend on the exam and your needs.",
+  },
+  {
+    question: "How does the CLAT Foundation program help early starters?",
+    answer:
+      "It gives early aspirants time to strengthen reading and reasoning, build a current-affairs routine, and become familiar with law entrance preparation before the final exam year.",
+  },
+  {
+    question: "What is included in the CLAT + AILET Comprehensive program?",
+    answer:
+      "The comprehensive program brings together subject learning and exam-focused practice. Review the current course details or speak with an advisor for the latest schedule, format, and support information.",
+  },
+  {
+    question: "Who should consider the AILET Focus program?",
+    answer:
+      "It may suit students who want targeted AILET preparation alongside their broader law-entrance study. Consider your target exam, current preparation, and available study time when choosing.",
+  },
+  {
+    question: "How important are mock tests?",
+    answer:
+      "Mock tests help you practise under timed conditions, understand how you manage the paper, and identify areas to work on. Reviewing each attempt is just as important as taking the test.",
+  },
+  {
+    question: "How should I review a mock test?",
+    answer:
+      "Look at questions you got wrong, questions you guessed, and questions that took too long. Note why each answer was difficult, revisit the relevant concept, and use that reflection to plan your next practice.",
+  },
+  {
+    question: "How can I build a daily current-affairs habit?",
+    answer:
+      "Choose a regular time to read, note the main issue and arguments, and revisit important developments. Consistent, thoughtful reading is more useful than trying to memorise everything at once.",
+  },
+  {
+    question: "What if I find legal reasoning difficult?",
+    answer:
+      "Start by reading the facts and principle carefully, then identify how the principle applies to each option. Practise explaining why an answer follows from the passage, and review the reasoning when you make a mistake.",
+  },
+  {
+    question: "How much time should I study each day?",
+    answer:
+      "There is no single number that works for everyone. Build a realistic weekly routine around school or other responsibilities, and make time for learning, practice, and review.",
+  },
+  {
+    question: "Can I explore programs before enrolling?",
+    answer:
+      "Yes. Review the program information and speak with an advisor before deciding. Ask about the learning plan, schedule, format, and the support available for your stage.",
+  },
+  {
+    question: "Where can I find free CLAT and AILET learning resources?",
+    answer:
+      "Explore the free guides and reading materials in the Learning Resources section above. You can also visit the Current Affairs and Mock Tests pages for additional preparation resources.",
+  },
+  {
+    question: "How can parents support a law entrance aspirant?",
+    answer:
+      "Help your student create a sustainable routine, encourage them to discuss questions and challenges, and recognise steady progress as well as results. A conversation with an advisor can help families understand program options.",
+  },
+  {
+    question: "How can I find out about course fees and schedules?",
+    answer:
+      "Course schedules and fees can vary. Share your contact details through the enquiry form and an advisor can provide the latest information for the programs you are considering.",
+  },
+  {
+    question: "How do I speak with an advisor?",
+    answer:
+      "Use the enquiry form below to share your name, contact details, study stage, and target exam. An advisor can then help you understand the available next steps.",
   },
 ];
 
@@ -209,15 +268,16 @@ export default function FigmaHomePage() {
       <section className="editorial-hero">
         <div className="editorial-container editorial-hero__grid">
           <div className="editorial-hero__copy">
-            <p className="editorial-eyebrow">For the next generation of legal minds</p>
+            <p className="editorial-eyebrow">CLAT and AILET preparation for every starting point</p>
             <h1 className="editorial-title">
               Your ambition.
               <br />
               <em>A higher calling.</em>
             </h1>
             <p>
-              Thoughtful preparation for CLAT, AILET and a future in law. Build
-              the knowledge, judgement and confidence to take your next step.
+              Preparing for CLAT or AILET from Class 11, Class 12, or a fresh
+              start? Build the reading, reasoning, and confidence to take your
+              next step toward law school.
             </p>
             <div className="editorial-hero__actions">
               <Link href="/courses" className="editorial-link editorial-link--filled">
@@ -229,7 +289,7 @@ export default function FigmaHomePage() {
             </div>
             <p className="editorial-hero__footnote">
               <Check size={13} aria-hidden="true" />
-              For first-time aspirants, focused learners and fresh starts.
+              Support for students, repeaters, and the families backing them.
             </p>
           </div>
 
@@ -250,33 +310,31 @@ export default function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="editorial-promise" aria-label="Our promise">
-        <div className="editorial-container editorial-promise__grid">
-          <div><span>⌕</span><div><strong>Depth over shortcuts</strong><small>Understand the reasoning, not just the answer.</small></div></div>
-          <div><span>◎</span><div><strong>Direction, not overwhelm</strong><small>A clear path through your preparation.</small></div></div>
-          <div><span>▧</span><div><strong>Guidance with perspective</strong><small>Make space for questions and better thinking.</small></div></div>
-        </div>
-      </section>
-
       <section className="editorial-approach" id="approach">
         <div className="editorial-container editorial-approach__grid">
           <div>
-            <p className="editorial-eyebrow">The Delhi Law School difference</p>
-            <h2>A legal mind is built, not memorised.</h2>
+            <p className="editorial-eyebrow">Why choose Delhi Law School?</p>
+            <h2>Preparation that meets you where you are.</h2>
           </div>
           <div className="editorial-approach__copy">
             <p>
-              Law entrance preparation is more than a syllabus to finish. It is
-              a practice of reading closely, questioning assumptions and making
-              reasoned choices.
+              Whether you are beginning early, balancing school with exam prep,
+              or returning as a repeater, you deserve a clear plan—not more
+              pressure or a one-size-fits-all timetable.
             </p>
             <p>
-              That is where we begin.
+              We focus on close reading, reasoned practice, and honest review
+              so students and families can make informed decisions at every step.
             </p>
             <Link href="/about" className="editorial-text-link">
-              Discover our approach <ArrowRight size={14} aria-hidden="true" />
+              See how we support aspirants <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
+        </div>
+        <div className="editorial-container editorial-promise__grid">
+          <div><span>⌕</span><div><strong>Build real understanding</strong><small>Learn the reasoning behind each answer.</small></div></div>
+          <div><span>◎</span><div><strong>Find a clear direction</strong><small>Make a study plan for your stage and goals.</small></div></div>
+          <div><span>▧</span><div><strong>Get thoughtful guidance</strong><small>Make progress without losing perspective.</small></div></div>
         </div>
       </section>
 
@@ -284,16 +342,15 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-programs__intro">
             <div>
-              <p className="editorial-eyebrow">Your route into law school</p>
+              <p className="editorial-eyebrow">Our Programs · Choose your preparation stage</p>
               <h2>
                 Different starting points.
                 <br />
                 <em>One clear ambition.</em>
               </h2>
               <p className="editorial-programs__summary">
-                Start early, build a complete foundation, or sharpen your focus.
-                Find preparation that meets you where you are—and gives you a
-                considered way forward.
+                Choose a foundation for an early start, comprehensive support
+                alongside school or a targeted plan for focused exam practice.
               </p>
               <Link href="/courses" className="editorial-link editorial-link--small">
                 Help me choose a program <ArrowUpRight size={14} aria-hidden="true" />
@@ -311,7 +368,7 @@ export default function FigmaHomePage() {
           </div>
 
           <div className="editorial-programs__bar">
-            <span>Explore your options</span>
+            <span>Find your starting point</span>
             <span>CLAT · AILET · Law entrance preparation</span>
           </div>
           <div className="editorial-paths">
@@ -341,11 +398,13 @@ export default function FigmaHomePage() {
         </div>
       </section>
 
+      <ExamOverview />
+
       <section className="editorial-method" id="method">
         <div className="editorial-container">
           <div className="editorial-method__heading">
             <div>
-              <p className="editorial-eyebrow">The Delhi Law School approach</p>
+              <p className="editorial-eyebrow">Teaching Methodology</p>
               <h2>A rhythm for meaningful progress.</h2>
             </div>
             <p>
@@ -373,97 +432,36 @@ export default function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="editorial-story">
-        <div className="editorial-story__image">
-          <Image
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=85"
-            alt="Students learning and sharing ideas around a table"
-            fill
-            sizes="(max-width: 800px) 100vw, 50vw"
-          />
-          <div className="editorial-story__caption">
-            <strong>A question worth asking</strong>
-            <span>“What made this answer convincing?”</span>
-          </div>
-        </div>
-        <div className="editorial-story__copy">
-          <p className="editorial-eyebrow">Preparation is personal</p>
-          <h2>
-            Big ambitions.
-            <br />
-            Better questions.
-            <br />
-            <em>A guide beside you.</em>
-          </h2>
-          <p>
-            A thoughtful mentor does more than explain a solution. They help you
-            see how you learn, make sense of setbacks and approach the next
-            challenge with perspective.
-          </p>
-          <div className="editorial-story__links">
-            <a href="#mentorship">Speak to us</a>
-            <a href="#method">This is what we do</a>
-            <a href="#reading-room">A closer look inside</a>
-          </div>
-          <Link href="/faculty" className="editorial-link editorial-link--light">
-            Explore guided learning <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
+      <FacultySection />
 
-      <section className="editorial-mentorship" id="mentorship">
+      <section className="editorial-success" aria-labelledby="student-success-heading">
         <div className="editorial-container">
           <div className="editorial-section-heading">
             <div>
-              <p className="editorial-eyebrow">The people in your corner</p>
-              <h2>Guidance, in all the ways it matters.</h2>
+              <p className="editorial-eyebrow">Student Success Stories</p>
+              <h2 id="student-success-heading">Every result represents a journey.</h2>
             </div>
-            <p>A view of the mentoring roles that make purposeful preparation feel more human.</p>
+            <p>Celebrate the students who earned a place at leading law universities.</p>
           </div>
-          <div className="editorial-mentor-grid">
-            {mentors.map((mentor) => (
-              <article className="editorial-mentor" key={mentor.title}>
-                <span className="editorial-mentor__icon" aria-hidden="true">{mentor.icon}</span>
-                <h3>{mentor.title}</h3>
-                <strong>{mentor.subtitle}</strong>
-                <p>{mentor.body}</p>
-                <span className="editorial-mentor__note">{mentor.note}</span>
+          <div className="editorial-success__grid">
+            {studentSuccessStories.map((student) => (
+              <article className="editorial-success__card" key={student.name}>
+                <span className="editorial-success__initials" aria-hidden="true">{student.initials}</span>
+                <div>
+                  <p className="editorial-success__exam">{student.exam}</p>
+                  <h3>{student.name}</h3>
+                  <p>{student.nlu}</p>
+                </div>
+                <strong>{student.rank}</strong>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="editorial-student">
-        <div className="editorial-container editorial-student__grid">
-          <div className="editorial-student__image">
-            <Image
-              src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=85"
-              alt="A student reading and making notes beside a window"
-              fill
-              sizes="(max-width: 800px) 100vw, 34vw"
-            />
-            <span>Your journey, with room to grow.</span>
-          </div>
-          <div className="editorial-student__copy">
-            <p className="editorial-eyebrow">From the aspirant&apos;s side</p>
-            <h2>There is a person behind every preparation plan.</h2>
-            <blockquote>
-              <span>“Where do I even begin?”</span>
-              Start with your learning stage, not someone else&apos;s timetable.
-            </blockquote>
-            <blockquote>
-              <span>“I practise, but what should I change?”</span>
-              Make room for review. Your mistakes can point the way forward.
-            </blockquote>
-            <blockquote>
-              <span>“How do I keep my balance?”</span>
-              Build a realistic rhythm, with space to pause and begin again.
-            </blockquote>
-            <p className="editorial-student__footnote">
-              A better plan starts with a real conversation.
-            </p>
-          </div>
+          <p className="editorial-success__note">
+            Past results are individual outcomes and do not guarantee future performance.
+          </p>
+          <Link href="/results" className="editorial-text-link">
+            Explore all results <ArrowRight size={14} aria-hidden="true" />
+          </Link>
         </div>
       </section>
 
@@ -471,11 +469,11 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-section-heading">
             <div>
-              <p className="editorial-eyebrow">A little perspective. A better next step.</p>
-              <h2>Ideas for the way ahead.</h2>
+              <p className="editorial-eyebrow">Free Learning Resources</p>
+              <h2>Explore, practise, and keep learning.</h2>
             </div>
             <Link href="/current-affairs" className="editorial-text-link">
-              Visit the reading room <ArrowRight size={14} aria-hidden="true" />
+              Browse all resources <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
           <div className="editorial-reading-grid">
@@ -497,13 +495,13 @@ export default function FigmaHomePage() {
       </section>
 
       <section className="editorial-faq">
-        <div className="editorial-container editorial-faq__grid">
+        <div className="editorial-container">
           <div className="editorial-faq__heading">
-            <p className="editorial-eyebrow">A little more clarity</p>
-            <h2>Good questions. Considered answers.</h2>
+            <p className="editorial-eyebrow">FAQs</p>
+            <h2>20 answers for students and families.</h2>
             <p>
-              Choosing how to prepare is a decision worth thinking through.
-              Here are a few places to begin.
+              Explore common questions about CLAT and AILET preparation,
+              programs, practice, and finding the right starting point.
             </p>
             <Link href="/enquiry" className="editorial-text-link">
               Ask an advisor <ArrowRight size={14} aria-hidden="true" />
@@ -512,18 +510,24 @@ export default function FigmaHomePage() {
           <div className="editorial-faq__list">
             {faqs.map((faq, index) => {
               const isOpen = openQuestion === index;
+              const answerId = `faq-answer-${index + 1}`;
               return (
                 <article className="editorial-faq__item" key={faq.question}>
                   <h3>
                     <button
                       aria-expanded={isOpen}
+                      aria-controls={answerId}
                       onClick={() => setOpenQuestion(isOpen ? null : index)}
                     >
                       {faq.question}
-                      {isOpen ? <Minus size={15} /> : <Plus size={15} />}
+                      {isOpen ? (
+                        <Minus size={15} aria-hidden="true" />
+                      ) : (
+                        <Plus size={15} aria-hidden="true" />
+                      )}
                     </button>
                   </h3>
-                  {isOpen && <p>{faq.answer}</p>}
+                  <p id={answerId} hidden={!isOpen}>{faq.answer}</p>
                 </article>
               );
             })}

@@ -190,7 +190,7 @@ export default function ResultsClient() {
                     <td className="px-4 py-3" style={{ color: "var(--color-muted)" }}>{nlu}</td>
                     <td className="px-4 py-3">
                       <span className="pill"
-                        style={{ background: "rgba(107,30,46,0.08)", color: "var(--color-primary)" }}>
+                        style={{ background: "rgba(0,0,0,0.08)", color: "var(--color-primary)" }}>
                         {e}
                       </span>
                     </td>

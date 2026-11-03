@@ -33,14 +33,17 @@ const faculty = [
 
 export default function FacultySection() {
   return (
-    <section className="section-padding band-surface">
+    <section className="section-padding band-surface" id="mentorship">
       <div className="container-custom">
         <div className="text-center mb-10">
           <p className="text-xs font-semibold uppercase tracking-widest mb-2"
             style={{ color: "var(--color-gold)", fontFamily: "var(--font-inter)" }}>
-            Faculty
+            Meet Our Faculty
           </p>
-          <h2 className="heading-display text-2xl sm:text-3xl mb-1">Meet Your Mentors</h2>
+          <h2 className="heading-display text-2xl sm:text-3xl mb-1">Meet Our Faculty</h2>
+          <p className="text-sm text-muted max-w-xl mx-auto">
+            Get guidance across legal reasoning, English, current affairs, and logical reasoning.
+          </p>
           <div className="rule mx-auto" />
         </div>
 

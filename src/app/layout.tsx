@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { BUSINESS_NAME } from "@/lib/site-details";
@@ -7,13 +7,6 @@ import { BUSINESS_NAME } from "@/lib/site-details";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-const serif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -81,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${serif.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="antialiased" style={{ background: "var(--color-paper)", color: "var(--color-ink)" }}>
         {children}
         <Toaster position="top-right" richColors />

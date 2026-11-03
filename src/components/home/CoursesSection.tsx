@@ -67,7 +67,7 @@ export default function CoursesSection() {
                 {/* Tag */}
                 <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full self-start mb-4"
                   style={{
-                    background: "rgba(107,30,46,0.08)",
+                    background: "rgba(0,0,0,0.08)",
                     color: "var(--color-primary)",
                     fontFamily: "var(--font-inter)",
                   }}>

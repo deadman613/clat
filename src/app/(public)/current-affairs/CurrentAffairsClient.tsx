@@ -47,8 +47,8 @@ const items = [
 ];
 
 const relevanceStyle: Record<string, { bg: string; color: string }> = {
-  High:   { bg: "rgba(107,30,46,0.08)", color: "var(--color-primary)" },
-  Medium: { bg: "rgba(176,141,60,0.12)", color: "#7A5C1A" },
+  High:   { bg: "rgba(0,0,0,0.08)", color: "var(--color-primary)" },
+  Medium: { bg: "rgba(0,0,0,0.05)", color: "var(--color-muted)" },
 };
 
 export default function CurrentAffairsClient() {

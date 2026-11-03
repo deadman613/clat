@@ -21,7 +21,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen gradient-hero grayscale flex items-center justify-center p-4">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-600/10 blur-3xl" />
