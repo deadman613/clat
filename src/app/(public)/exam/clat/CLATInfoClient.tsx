@@ -68,7 +68,7 @@ export default function CLATInfoClient() {
             <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-white mb-4">
               CLAT 2025 — Complete Guide
             </h1>
-            <p className="text-blue-200/70 max-w-xl mx-auto">
+            <p className="exam-guide-hero__summary text-blue-200/70">
               Everything you need to know about the Common Law Admission Test — eligibility, pattern, syllabus, and strategy.
             </p>
           </motion.div>

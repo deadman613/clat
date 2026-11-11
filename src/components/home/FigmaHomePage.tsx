@@ -7,12 +7,7 @@ import { ArrowRight, ArrowUpRight, Check, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import FacultySection from "@/components/home/FacultySection";
 import ExamOverview from "@/components/home/ExamOverview";
-
-const studentSuccessStories = [
-  { initials: "AS", name: "Ananya Sharma", rank: "AIR 3", nlu: "NLSIU Bangalore", exam: "CLAT 2024" },
-  { initials: "RG", name: "Rishi Gupta", rank: "AIR 7", nlu: "NALSAR Hyderabad", exam: "CLAT 2024" },
-  { initials: "PN", name: "Priya Nair", rank: "AIR 12", nlu: "NLU Delhi", exam: "CLAT 2024" },
-];
+import { BUSINESS_CONTACT } from "@/lib/site-details";
 
 const pathways = [
   {
@@ -20,8 +15,8 @@ const pathways = [
     label: "For early starters",
     title: "CLAT Foundation",
     description:
-      "For early starters who want time to read, explore, and build strong foundations.",
-    points: ["Reading and reasoning foundations", "Current affairs habits", "A steady introduction to law"],
+      "A structured starting point for Class 11 and 12 students building core law-entrance skills.",
+    points: ["English and reading comprehension", "Current affairs and reasoning", "For Class 11 and 12 aspirants"],
     link: "Explore this program",
     href: "/courses/clat-foundation",
   },
@@ -30,10 +25,10 @@ const pathways = [
     label: "Prepare with purpose",
     title: "CLAT + AILET Comprehensive",
     description:
-      "For aspirants seeking a connected path from core concepts to exam-focused practice.",
-    points: ["Learn core subject preparation", "Practice, track, and reflect", "A personal preparation roadmap"],
+      "A combined preparation path for students targeting CLAT and AILET.",
+    points: ["Shared subject foundations", "CLAT and AILET pattern practice", "For Class 12 students and droppers"],
     link: "Explore this program",
-    href: "/courses/clat-power-batch",
+    href: "/courses/clat-ailet-combo",
     featured: true,
   },
   {
@@ -41,8 +36,8 @@ const pathways = [
     label: "Strengthen your focus",
     title: "AILET Focus",
     description:
-      "For learners looking for a more targeted approach to their preparation.",
-    points: ["Targeted and regular practice", "Current affairs and general knowledge", "Timed practice and exam strategy"],
+      "Focused preparation for aspirants targeting NLU Delhi through AILET.",
+    points: ["AILET-pattern practice", "Legal reasoning drills", "For Class 12 students and droppers"],
     link: "Explore this program",
     href: "/courses/ailet-preparation",
   },
@@ -51,47 +46,60 @@ const pathways = [
 const habits = [
   {
     number: "01",
-    title: "Understand deeply",
-    description: "Build the concepts. Ask why an argument works, not simply which option is correct.",
+    title: "Counselling and demo",
+    description: "Discuss your goals, current preparation, and course options before enrolling.",
   },
   {
     number: "02",
-    title: "Practise deliberately",
-    description: "Bring ideas into passages, questions, and timed exercises with a clear purpose.",
+    title: "Attend classes",
+    description: "Choose an available live online or classroom batch that fits your schedule.",
   },
   {
     number: "03",
-    title: "Review honestly",
-    description: "Look beyond a score. Notice your patterns, revisit errors, and refine your approach.",
+    title: "Practise by section",
+    description: "Build familiarity with reading, reasoning, current affairs, and quantitative questions.",
   },
   {
     number: "04",
-    title: "Move with clarity",
-    description: "Turn reflection into your next study plan, with room for progress and perspective.",
+    title: "Analyse your attempts",
+    description: "Use practice attempts to identify patterns and areas that need attention.",
+  },
+  {
+    number: "05",
+    title: "Revise before the exam",
+    description: "Return to key concepts and current affairs as you prepare for exam day.",
+  },
+  {
+    number: "06",
+    title: "Plan your next step",
+    description: "Explore exam updates, admissions counselling, and guidance for what follows.",
   },
 ];
 
 const readingRoom = [
   {
-    category: "Exam perspective",
-    title: "CLAT and AILET: understand the difference",
-    excerpt: "A starting point for thinking about two distinct routes into legal education.",
+    category: "Free CLAT mock tests",
+    title: "Practise with a CLAT mock test",
+    excerpt: "Try a mock paper and use your review to decide what to practise next.",
+    alt: "University campus courtyard",
     image:
       "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85",
-    href: "/exam/clat",
-  },
-  {
-    category: "Better study habits",
-    title: "Your mock is over. The learning is not.",
-    excerpt: "Move beyond the score with a calmer, more useful approach to review.",
-    image:
-      "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=85",
     href: "/mock-tests",
   },
   {
-    category: "The reading practice",
-    title: "Read the news like an aspiring lawyer.",
-    excerpt: "Look for the issue, the argument and the questions a headline leaves open.",
+    category: "CLAT exam guide",
+    title: "Understand the CLAT exam pattern",
+    excerpt: "Review current exam information and use it to structure your preparation.",
+    alt: "Books and reading material arranged on a study table",
+    image:
+      "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=85",
+    href: "/exam/clat",
+  },
+  {
+    category: "Current affairs",
+    title: "Build a current-affairs reading habit",
+    excerpt: "Follow important developments and practise identifying the issues behind a headline.",
+    alt: "Newspaper pages showing current-affairs coverage",
     image:
       "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=85",
     href: "/current-affairs",
@@ -100,104 +108,44 @@ const readingRoom = [
 
 const faqs = [
   {
-    question: "When should I start preparing for CLAT or AILET?",
+    question: "Which is the best CLAT coaching in Delhi?",
     answer:
-      "You can begin in Class 11 by building reading and reasoning habits, or start later with a focused plan. The right starting point depends on your current skills, study time, and target exam.",
+      "The right CLAT coaching depends on your class, preferred mode, and budget. Compare faculty, schedules, mock-test analysis, and results you can verify. Delhi Law School offers online and classroom CLAT preparation, free resources, and a demo class so you can understand the approach before deciding.",
   },
   {
-    question: "Which program is right for a Class 11 student?",
+    question: "When is CLAT 2027?",
     answer:
-      "The CLAT Foundation program is designed for early starters who want time to develop strong reading, reasoning, and current-affairs habits. Compare its schedule and course details with an advisor to see if it fits your plans.",
+      "CLAT 2027 is scheduled for 6 December 2026, from 2 pm to 4 pm, in offline mode. Applications closed on 7 November 2026, with corrections available until 10 November. Check the official Consortium website for any updates and admit-card information.",
   },
   {
-    question: "What if I am currently in Class 12?",
+    question: "What is the CLAT exam pattern?",
     answer:
-      "A comprehensive, exam-focused plan can help you balance school with CLAT and AILET preparation. Your plan should make room for learning concepts, timed practice, and reviewing your attempts.",
+      "CLAT UG is a two-hour paper with 120 multiple-choice questions and 0.25 negative marking for each incorrect answer. Its five sections are English, Current Affairs and GK, Legal Reasoning, Logical Reasoning, and Quantitative Techniques. Always check the latest official notification for changes.",
   },
   {
-    question: "Can repeaters or droppers join a program?",
+    question: "When should I start CLAT preparation?",
     answer:
-      "Yes. If you are preparing again, start by identifying which subjects and question types need more attention. An advisor can help you compare available programs and choose a plan for your next attempt.",
+      "Starting in Class 11 or early in Class 12 gives you more time to build reading speed, legal reasoning, and a current-affairs routine. Droppers and later starters can still prepare with a focused plan based on their target exam, available study time, and areas that need attention.",
   },
   {
-    question: "How are CLAT and AILET preparation different?",
+    question: "Can I do CLAT coaching online?",
     answer:
-      "Both exams reward strong reading and reasoning, but they have different formats and areas of emphasis. Preparation should cover shared skills as well as practice tailored to each exam.",
+      "Yes. Online CLAT coaching can include live classes, recordings, doubt sessions, and online mock tests, making it possible to study from across North India. Delhi Law School also offers classroom batches in Delhi; contact an advisor to confirm current availability and format.",
   },
   {
-    question: "Can I prepare for both CLAT and AILET together?",
+    question: "Do you offer a free demo class?",
     answer:
-      "Yes. You can build shared foundations in reading, reasoning, and current affairs, then add practice for the question types and format of each exam.",
+      "Yes. You can request a free demo class and speak with an advisor before enrolling. Use the enquiry form on this page or call 9266500227 to ask about available online or classroom sessions and choose a time that works for you.",
   },
   {
-    question: "What subjects are covered in law entrance preparation?",
+    question: "What is the CLAT coaching fee at Delhi Law School?",
     answer:
-      "Preparation generally includes English and reading comprehension, current affairs and general knowledge, legal reasoning, logical reasoning, and quantitative techniques. The time spent on each area can depend on the exam and your needs.",
+      "Fees depend on the course, mode, and batch. Contact an advisor for current prices, schedules, and installment options before enrolling. This page does not publish fee amounts because they can change; ask for the latest fee details for CLAT Foundation, the CLAT + AILET Comprehensive course, or AILET Focus.",
   },
   {
-    question: "How does the CLAT Foundation program help early starters?",
+    question: "Can I prepare for CLAT and AILET together?",
     answer:
-      "It gives early aspirants time to strengthen reading and reasoning, build a current-affairs routine, and become familiar with law entrance preparation before the final exam year.",
-  },
-  {
-    question: "What is included in the CLAT + AILET Comprehensive program?",
-    answer:
-      "The comprehensive program brings together subject learning and exam-focused practice. Review the current course details or speak with an advisor for the latest schedule, format, and support information.",
-  },
-  {
-    question: "Who should consider the AILET Focus program?",
-    answer:
-      "It may suit students who want targeted AILET preparation alongside their broader law-entrance study. Consider your target exam, current preparation, and available study time when choosing.",
-  },
-  {
-    question: "How important are mock tests?",
-    answer:
-      "Mock tests help you practise under timed conditions, understand how you manage the paper, and identify areas to work on. Reviewing each attempt is just as important as taking the test.",
-  },
-  {
-    question: "How should I review a mock test?",
-    answer:
-      "Look at questions you got wrong, questions you guessed, and questions that took too long. Note why each answer was difficult, revisit the relevant concept, and use that reflection to plan your next practice.",
-  },
-  {
-    question: "How can I build a daily current-affairs habit?",
-    answer:
-      "Choose a regular time to read, note the main issue and arguments, and revisit important developments. Consistent, thoughtful reading is more useful than trying to memorise everything at once.",
-  },
-  {
-    question: "What if I find legal reasoning difficult?",
-    answer:
-      "Start by reading the facts and principle carefully, then identify how the principle applies to each option. Practise explaining why an answer follows from the passage, and review the reasoning when you make a mistake.",
-  },
-  {
-    question: "How much time should I study each day?",
-    answer:
-      "There is no single number that works for everyone. Build a realistic weekly routine around school or other responsibilities, and make time for learning, practice, and review.",
-  },
-  {
-    question: "Can I explore programs before enrolling?",
-    answer:
-      "Yes. Review the program information and speak with an advisor before deciding. Ask about the learning plan, schedule, format, and the support available for your stage.",
-  },
-  {
-    question: "Where can I find free CLAT and AILET learning resources?",
-    answer:
-      "Explore the free guides and reading materials in the Learning Resources section above. You can also visit the Current Affairs and Mock Tests pages for additional preparation resources.",
-  },
-  {
-    question: "How can parents support a law entrance aspirant?",
-    answer:
-      "Help your student create a sustainable routine, encourage them to discuss questions and challenges, and recognise steady progress as well as results. A conversation with an advisor can help families understand program options.",
-  },
-  {
-    question: "How can I find out about course fees and schedules?",
-    answer:
-      "Course schedules and fees can vary. Share your contact details through the enquiry form and an advisor can provide the latest information for the programs you are considering.",
-  },
-  {
-    question: "How do I speak with an advisor?",
-    answer:
-      "Use the enquiry form below to share your name, contact details, study stage, and target exam. An advisor can then help you understand the available next steps.",
+      "Yes. CLAT and AILET share several subject areas, but each exam has its own format and emphasis. Prepare common foundations alongside practice designed for each paper. The CLAT + AILET Comprehensive course is intended for students who want to work toward both exams.",
   },
 ];
 
@@ -265,38 +213,91 @@ export default function FigmaHomePage() {
 
   return (
     <div className="editorial-home" id="top">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                name: "Delhi Law School",
+                url: "https://delhilawschool.com/",
+                telephone: BUSINESS_CONTACT.phone.href.replace("tel:", ""),
+                sameAs: [BUSINESS_CONTACT.instagram.href],
+              },
+              ...pathways.map((program) => ({
+                "@type": "Course",
+                name: program.title,
+                description: program.description,
+                url: `https://delhilawschool.com${program.href}`,
+                provider: {
+                  "@type": "Organization",
+                  name: "Delhi Law School",
+                  url: "https://delhilawschool.com/",
+                },
+              })),
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: "https://delhilawschool.com/",
+                  },
+                ],
+              },
+              {
+                "@type": "FAQPage",
+                mainEntity: faqs.map((faq) => ({
+                  "@type": "Question",
+                  name: faq.question,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: faq.answer,
+                  },
+                })),
+              },
+            ],
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="editorial-hero">
         <div className="editorial-container editorial-hero__grid">
           <div className="editorial-hero__copy">
-            <p className="editorial-eyebrow">CLAT and AILET preparation for every starting point</p>
+            <p className="editorial-eyebrow">Delhi Law School · Free demo classes · Free resources</p>
             <h1 className="editorial-title">
-              Your ambition.
+              CLAT Coaching in Delhi:
               <br />
-              <em>A higher calling.</em>
+              <em>Online &amp; Offline</em>
             </h1>
             <p>
-              Preparing for CLAT or AILET from Class 11, Class 12, or a fresh
-              start? Build the reading, reasoning, and confidence to take your
-              next step toward law school.
+              Delhi Law School is a CLAT coaching institute in Delhi for
+              students across North India. We teach CLAT, AILET, and other law
+              entrance exams through live online and classroom batches, with
+              study material, mock tests, free resources, and a free demo class.
+              CLAT 2027 is scheduled for 6 December 2026.
             </p>
             <div className="editorial-hero__actions">
               <Link href="/courses" className="editorial-link editorial-link--filled">
-                Find your program <ArrowRight size={15} aria-hidden="true" />
+                Explore CLAT Courses <ArrowRight size={15} aria-hidden="true" />
               </Link>
-              <Link href="/#consultation" className="editorial-link">
-                Let&apos;s talk about your goals
+              <Link href="/enquiry" className="editorial-link">
+                Book a Free Demo Class
               </Link>
             </div>
-            <p className="editorial-hero__footnote">
-              <Check size={13} aria-hidden="true" />
-              Support for students, repeaters, and the families backing them.
-            </p>
+            <div className="editorial-hero__highlights">
+              <p><Check size={13} aria-hidden="true" />Law faculty teaching CLAT and AILET subjects</p>
+              <p><Check size={13} aria-hidden="true" />Online and classroom options for students across North India</p>
+              <p><Check size={13} aria-hidden="true" />Free demo class and resources before you enrol</p>
+            </div>
           </div>
 
           <div className="editorial-hero__image">
             <Image
               src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=85"
-              alt="A university courtyard framed by historic architecture"
+              alt="University courtyard framed by historic architecture, illustrating a path toward law school"
               fill
               priority
               sizes="(max-width: 800px) 100vw, 52vw"
@@ -310,50 +311,18 @@ export default function FigmaHomePage() {
         </div>
       </section>
 
-      <section className="editorial-approach" id="approach">
-        <div className="editorial-container editorial-approach__grid">
-          <div>
-            <p className="editorial-eyebrow">Why choose Delhi Law School?</p>
-            <h2>Preparation that meets you where you are.</h2>
-          </div>
-          <div className="editorial-approach__copy">
-            <p>
-              Whether you are beginning early, balancing school with exam prep,
-              or returning as a repeater, you deserve a clear plan—not more
-              pressure or a one-size-fits-all timetable.
-            </p>
-            <p>
-              We focus on close reading, reasoned practice, and honest review
-              so students and families can make informed decisions at every step.
-            </p>
-            <Link href="/about" className="editorial-text-link">
-              See how we support aspirants <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-        <div className="editorial-container editorial-promise__grid">
-          <div><span>⌕</span><div><strong>Build real understanding</strong><small>Learn the reasoning behind each answer.</small></div></div>
-          <div><span>◎</span><div><strong>Find a clear direction</strong><small>Make a study plan for your stage and goals.</small></div></div>
-          <div><span>▧</span><div><strong>Get thoughtful guidance</strong><small>Make progress without losing perspective.</small></div></div>
-        </div>
-      </section>
-
       <section className="editorial-programs" id="programs">
         <div className="editorial-container">
           <div className="editorial-programs__intro">
             <div>
-              <p className="editorial-eyebrow">Our Programs · Choose your preparation stage</p>
-              <h2>
-                Different starting points.
-                <br />
-                <em>One clear ambition.</em>
-              </h2>
+              <p className="editorial-eyebrow">Our Programs · Choose your target exam</p>
+              <h2>CLAT and AILET Coaching Courses in Delhi</h2>
               <p className="editorial-programs__summary">
-                Choose a foundation for an early start, comprehensive support
-                alongside school or a targeted plan for focused exam practice.
+                Choose a course for your target exam and preparation stage.
+                Ask an advisor about available online and classroom batches.
               </p>
               <Link href="/courses" className="editorial-link editorial-link--small">
-                Help me choose a program <ArrowUpRight size={14} aria-hidden="true" />
+                Talk to a Counsellor <ArrowUpRight size={14} aria-hidden="true" />
               </Link>
             </div>
             <div className="editorial-programs__image">
@@ -392,9 +361,36 @@ export default function FigmaHomePage() {
             ))}
           </div>
           <p className="editorial-programs__note">
-            Not sure where to begin? An advisor can help you choose your own
-            path, reading plan and rhythm.
+            Not sure which course fits? Speak with a counsellor about your
+            target exam, preferred mode, and current preparation.
+            {" "}
+            <Link href="/enquiry">Book a free demo class</Link>
           </p>
+        </div>
+      </section>
+
+      <section className="editorial-approach" id="approach">
+        <div className="editorial-container editorial-approach__grid">
+          <div>
+            <p className="editorial-eyebrow">Why Delhi Law School</p>
+            <h2>Why Students Choose Delhi Law School for CLAT</h2>
+          </div>
+          <div className="editorial-approach__copy">
+            <p>
+              CLAT preparation can become difficult to manage when resources
+              are scattered and there is no clear plan. A structured schedule,
+              focused practice, and faculty feedback can help you stay on track.
+            </p>
+            <Link href="/about" className="editorial-text-link">
+              Learn about our approach <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+        <div className="editorial-container editorial-promise__grid">
+          <div><span>01</span><div><strong>Plan by preparation stage</strong><small>Build a routine around your class, exam goal, and available time.</small></div></div>
+          <div><span>02</span><div><strong>Practise all five CLAT areas</strong><small>Work on English, current affairs, legal and logical reasoning, and quantitative techniques.</small></div></div>
+          <div><span>03</span><div><strong>Review your practice</strong><small>Use mock attempts to spot patterns and decide what to revisit.</small></div></div>
+          <div><span>04</span><div><strong>Explore before enrolling</strong><small>Ask about a demo class, course format, and current batch details.</small></div></div>
         </div>
       </section>
 
@@ -438,29 +434,33 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-section-heading">
             <div>
-              <p className="editorial-eyebrow">Student Success Stories</p>
-              <h2 id="student-success-heading">Every result represents a journey.</h2>
+              <p className="editorial-eyebrow">Results and student reviews</p>
+              <h2 id="student-success-heading">Results should be easy to verify.</h2>
             </div>
-            <p>Celebrate the students who earned a place at leading law universities.</p>
+            <p>
+              Rank claims and student reviews belong with verifiable records,
+              exam-year details, and the student&apos;s permission.
+            </p>
           </div>
           <div className="editorial-success__grid">
-            {studentSuccessStories.map((student) => (
-              <article className="editorial-success__card" key={student.name}>
-                <span className="editorial-success__initials" aria-hidden="true">{student.initials}</span>
-                <div>
-                  <p className="editorial-success__exam">{student.exam}</p>
-                  <h3>{student.name}</h3>
-                  <p>{student.nlu}</p>
-                </div>
-                <strong>{student.rank}</strong>
-              </article>
-            ))}
+            <article className="editorial-success__card">
+              <div>
+                <h3>CLAT and AILET results</h3>
+                <p>Ask an advisor whether verified result records are available.</p>
+              </div>
+            </article>
+            <article className="editorial-success__card">
+              <div>
+                <h3>Student reviews</h3>
+                <p>Check that any review includes its exam year and was shared with permission.</p>
+              </div>
+            </article>
           </div>
           <p className="editorial-success__note">
-            Past results are individual outcomes and do not guarantee future performance.
+            Individual outcomes vary and do not guarantee future performance.
           </p>
-          <Link href="/results" className="editorial-text-link">
-            Explore all results <ArrowRight size={14} aria-hidden="true" />
+          <Link href="/enquiry" className="editorial-text-link">
+            Ask about results and reviews <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -469,18 +469,22 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-section-heading">
             <div>
-              <p className="editorial-eyebrow">Free Learning Resources</p>
-              <h2>Explore, practise, and keep learning.</h2>
+              <p className="editorial-eyebrow">Free resources and study material</p>
+              <h2>Explore CLAT resources and keep learning.</h2>
+              <p>Start with mock tests, exam information, and current affairs. Enrolled students can review course study-material details with an advisor.</p>
+              <Link href="/courses" className="editorial-text-link">
+                Course study-material details <ArrowRight size={14} aria-hidden="true" />
+              </Link>
             </div>
             <Link href="/current-affairs" className="editorial-text-link">
-              Browse all resources <ArrowRight size={14} aria-hidden="true" />
+              View current affairs <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
           <div className="editorial-reading-grid">
             {readingRoom.map((article) => (
               <article className="editorial-article" key={article.title}>
                 <Link href={article.href} className="editorial-article__image">
-                  <Image src={article.image} alt="" fill sizes="(max-width: 700px) 100vw, 33vw" />
+                  <Image src={article.image} alt={article.alt} fill sizes="(max-width: 700px) 100vw, 33vw" />
                 </Link>
                 <p className="editorial-eyebrow">{article.category}</p>
                 <h3><Link href={article.href}>{article.title}</Link></h3>
@@ -498,7 +502,7 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-faq__heading">
             <p className="editorial-eyebrow">FAQs</p>
-            <h2>20 answers for students and families.</h2>
+            <h2>Common CLAT and AILET questions, answered.</h2>
             <p>
               Explore common questions about CLAT and AILET preparation,
               programs, practice, and finding the right starting point.
@@ -532,6 +536,9 @@ export default function FigmaHomePage() {
               );
             })}
           </div>
+          <p className="editorial-faq__updated">
+            Exam information last updated: 11 November 2026.
+          </p>
         </div>
       </section>
 
@@ -554,8 +561,8 @@ export default function FigmaHomePage() {
           </div>
           <div className="editorial-form-card">
             <div className="editorial-form-card__heading">
-              <h3>Let&apos;s find your starting point.</h3>
-              <p>Leave your details to request a conversation with an advisor.</p>
+              <h3>Book a free demo class.</h3>
+              <p>Leave your details and an advisor can help you explore available courses and batches.</p>
             </div>
             <form className="editorial-form" onSubmit={handleSubmit}>
               <label>
@@ -647,6 +654,10 @@ export default function FigmaHomePage() {
               <p className="editorial-form__fineprint">
                 No spam. Just a thoughtful first conversation.
               </p>
+              <div className="editorial-form__contact">
+                <a href={BUSINESS_CONTACT.phone.href}>{BUSINESS_CONTACT.phone.display}</a>
+                <a href={BUSINESS_CONTACT.email.href}>{BUSINESS_CONTACT.email.display}</a>
+              </div>
             </form>
           </div>
         </div>

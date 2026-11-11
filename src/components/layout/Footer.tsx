@@ -46,7 +46,7 @@ export default function Footer() {
               Thoughtful preparation for CLAT and AILET, and the legal mind
               you&apos;re building along the way.
             </p>
-            <div className="mt-4 space-y-1 text-sm">
+            <div className="mt-4 space-y-1 text-[17px]">
               <p>
                 <a href={BUSINESS_CONTACT.phone.href}>{BUSINESS_CONTACT.phone.display}</a>
               </p>

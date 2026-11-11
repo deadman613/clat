@@ -23,7 +23,7 @@ export default function ExamGuide({
           <h1 className="font-playfair text-4xl sm:text-5xl font-bold text-white mb-3">
             {name}
           </h1>
-          <p className="text-blue-200/70 max-w-2xl mx-auto">{summary}</p>
+          <p className="exam-guide-hero__summary text-blue-200/70">{summary}</p>
         </div>
       </section>
 
