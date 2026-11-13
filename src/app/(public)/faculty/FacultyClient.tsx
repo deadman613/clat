@@ -113,6 +113,7 @@ export default function FacultyClient() {
       {/* Grid */}
       <section className="section-padding" style={{ background: "#fff" }}>
         <div className="container-custom">
+          <h2 className="sr-only">Faculty profiles</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(({ initials, name, qualification, experience, subject: sub, bio }, i) => (
               <motion.article key={name}
@@ -132,10 +133,10 @@ export default function FacultyClient() {
                 </div>
 
                 <div className="p-5 flex flex-col flex-1">
-                  <h2 className="text-base font-semibold mb-1"
+                  <h3 className="text-base font-semibold mb-1"
                     style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
                     {name}
-                  </h2>
+                  </h3>
 
                   {/* Qualification chip */}
                   <span className="inline-block text-xs px-2.5 py-0.5 rounded-full self-start mb-1"

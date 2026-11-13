@@ -182,7 +182,7 @@ export default function AdminDashboard() {
             <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="font-semibold text-slate-800 text-sm">Student Enrollment Trend</h3>
+                  <h2 className="font-semibold text-slate-800 text-sm">Student Enrollment Trend</h2>
                   <p className="text-xs text-slate-400">Monthly new enrollments</p>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
 
             {/* Revenue Pie */}
             <div className="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
-              <h3 className="font-semibold text-slate-800 text-sm mb-1">Revenue by Course</h3>
+              <h2 className="font-semibold text-slate-800 text-sm mb-1">Revenue by Course</h2>
               <p className="text-xs text-slate-400 mb-4">This month</p>
               <ResponsiveContainer width="100%" height={150}>
                 <PieChart>
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
           <div className="grid lg:grid-cols-3 gap-5">
             {/* Enquiries Bar Chart */}
             <div className="bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
-              <h3 className="font-semibold text-slate-800 text-sm mb-1">Weekly Enquiries</h3>
+              <h2 className="font-semibold text-slate-800 text-sm mb-1">Weekly Enquiries</h2>
               <p className="text-xs text-slate-400 mb-3">This week</p>
               <ResponsiveContainer width="100%" height={150}>
                 <BarChart data={enquiryData}>
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
             {/* Recent Enquiries Table */}
             <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-slate-800 text-sm">Recent Enquiries</h3>
+                <h2 className="font-semibold text-slate-800 text-sm">Recent Enquiries</h2>
                 <Link href="/admin/enquiries" className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1">
                   View All <ChevronRight className="w-3 h-3" />
                 </Link>
@@ -296,5 +296,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
 

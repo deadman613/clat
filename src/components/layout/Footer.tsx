@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="editorial-footer__columns">
             {columns.map((column) => (
               <div key={column.title}>
-                <h2>{column.title}</h2>
+                <h3>{column.title}</h3>
                 <ul>
                   {column.links.map((link) => (
                     <li key={link.label}>

@@ -270,6 +270,7 @@ export default function CoursesClientPage() {
           </aside>
 
           <div className="courses-catalog__results" aria-live="polite">
+            <h2 className="sr-only">Available courses</h2>
             <p className="courses-catalog__count">
               Showing <strong>{filtered.length}</strong> {filtered.length === 1 ? "program" : "programs"}
             </p>
@@ -293,10 +294,10 @@ export default function CoursesClientPage() {
                         style={{ background: "rgba(0,0,0,0.08)", color: "var(--color-primary)" }}>
                         {tag}
                       </span>
-                      <h2 className="text-lg font-semibold mb-2"
+                      <h3 className="text-lg font-semibold mb-2"
                         style={{ fontFamily: "var(--font-serif)", color: "var(--color-primary)" }}>
                         {name}
-                      </h2>
+                      </h3>
                       <p className="text-sm mb-5 flex-1" style={{ color: "var(--color-muted)", lineHeight: 1.6 }}>{desc}</p>
                       <ul className="space-y-2 mb-6">
                         {facts.map(({ icon: Icon, text }) => (

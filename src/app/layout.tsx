@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { BUSINESS_NAME } from "@/lib/site-details";
@@ -75,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased" style={{ background: "var(--color-paper)", color: "var(--color-ink)" }}>
-        {children}
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
         <Toaster position="top-right" richColors />
       </body>
     </html>

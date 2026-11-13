@@ -78,7 +78,7 @@ export default function TestimonialsSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="py-20 bg-slate-950">
+    <section ref={ref} className="section-padding bg-slate-950">
       <div className="container-custom">
         {/* Header */}
         <motion.div

@@ -2,11 +2,26 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowRight, ArrowUpRight, Check, Minus, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  ClipboardCheck,
+  GraduationCap,
+  MonitorPlay,
+  Minus,
+  Plus,
+  UsersRound,
+} from "lucide-react";
 import { toast } from "sonner";
 import FacultySection from "@/components/home/FacultySection";
 import ExamOverview from "@/components/home/ExamOverview";
+import { currentAffairsArticles } from "@/lib/current-affairs-articles";
 import { BUSINESS_CONTACT } from "@/lib/site-details";
 
 const pathways = [
@@ -43,6 +58,45 @@ const pathways = [
   },
 ];
 
+const programHighlights = [
+  {
+    title: "Free demo class",
+    description: "Get to know the teaching approach before choosing a course.",
+    href: "/enquiry",
+    icon: CalendarDays,
+  },
+  {
+    title: "Experienced faculty",
+    description: "Meet the educators guiding students through law-entrance preparation.",
+    href: "/faculty",
+    icon: UsersRound,
+  },
+  {
+    title: "Online and classroom batches",
+    description: "Ask about available batch formats and find an option that fits your routine.",
+    href: "/courses",
+    icon: MonitorPlay,
+  },
+  {
+    title: "CLAT and AILET courses",
+    description: "Explore structured preparation paths for your target examination.",
+    href: "/courses",
+    icon: GraduationCap,
+  },
+  {
+    title: "Practice resources",
+    description: "Use mock tests and practice material to build familiarity with the exams.",
+    href: "/mock-tests",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Exam guides and current affairs",
+    description: "Review exam information and follow relevant current-affairs topics.",
+    href: "/current-affairs",
+    icon: BookOpen,
+  },
+];
+
 const habits = [
   {
     number: "01",
@@ -76,6 +130,26 @@ const habits = [
   },
 ];
 
+const approachSteps = [
+  {
+    title: "Plan by preparation stage",
+    description: "Build a routine around your class, exam goal, and available time.",
+  },
+  {
+    title: "Practise all five CLAT areas",
+    description:
+      "Work on English, current affairs, legal and logical reasoning, and quantitative techniques.",
+  },
+  {
+    title: "Review your practice",
+    description: "Use mock attempts to spot patterns and decide what to revisit.",
+  },
+  {
+    title: "Explore before enrolling",
+    description: "Ask about a demo class, course format, and current batch details.",
+  },
+];
+
 const readingRoom = [
   {
     category: "Free CLAT mock tests",
@@ -105,6 +179,49 @@ const readingRoom = [
     href: "/current-affairs",
   },
 ];
+
+const heroSlides = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=85",
+    alt: "University courtyard framed by historic architecture",
+    caption: <>Learn to think.<br />Prepare to lead.</>,
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1600&q=85",
+    alt: "Books and reading materials arranged on a study table",
+    caption: <>Build your foundation.<br />Strengthen your practice.</>,
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1600&q=85",
+    alt: "Newspaper pages showing current-affairs coverage",
+    caption: <>Stay informed.<br />Think beyond the headline.</>,
+  },
+];
+
+const recentBlogImages = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=85",
+    alt: "Newspaper pages showing current-affairs coverage",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=85",
+    alt: "Books and reading material arranged on a study table",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85",
+    alt: "University campus courtyard",
+  },
+];
+
+const recentBlogPosts = [...currentAffairsArticles]
+  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+  .slice(0, 3);
 
 const faqs = [
   {
@@ -159,10 +276,76 @@ const initialForm = {
   consent: false,
 };
 
+function HeroExamStat({
+  value,
+  label,
+  suffix = "+",
+}: {
+  value: number;
+  label: string;
+  suffix?: string;
+}) {
+  const prefersReducedMotion = useReducedMotion();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const duration = 1100;
+    let frame = 0;
+    let startTime: number | undefined;
+
+    const updateCount = (time: number) => {
+      startTime ??= time;
+      const progress = Math.min((time - startTime) / duration, 1);
+      const easedProgress = 1 - (1 - progress) ** 3;
+      setCount(value * easedProgress);
+
+      if (progress < 1) {
+        frame = requestAnimationFrame(updateCount);
+      }
+    };
+
+    frame = requestAnimationFrame(updateCount);
+    return () => cancelAnimationFrame(frame);
+  }, [prefersReducedMotion, value]);
+
+  return (
+    <div className="editorial-hero__stat">
+      <span
+        className="editorial-hero__stat-value"
+        aria-label={`${value.toLocaleString("en-IN")}${suffix}`}
+      >
+        <span aria-hidden="true">
+          {(prefersReducedMotion ? value : Math.floor(count)).toLocaleString("en-IN")}{suffix}
+        </span>
+      </span>
+      <span className="editorial-hero__stat-label">{label}</span>
+    </div>
+  );
+}
+
 export default function FigmaHomePage() {
   const [openQuestion, setOpenQuestion] = useState<number | null>(0);
   const [form, setForm] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
+  const [isHeroCarouselPaused, setIsHeroCarouselPaused] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion || isHeroCarouselPaused) return;
+
+    const timer = window.setInterval(() => {
+      setActiveHeroSlide((current) => (current + 1) % heroSlides.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, [isHeroCarouselPaused, prefersReducedMotion]);
+
+  function showHeroSlide(index: number) {
+    setActiveHeroSlide((index + heroSlides.length) % heroSlides.length);
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -270,7 +453,9 @@ export default function FigmaHomePage() {
             <h1 className="editorial-title">
               CLAT Coaching in Delhi:
               <br />
-              <em>Online &amp; Offline</em>
+              <span className="editorial-title__online">Online</span>
+              {" "}&amp;{" "}
+              <span className="editorial-title__offline">Offline</span>
             </h1>
             <p>
               Delhi Law School is a CLAT coaching institute in Delhi for
@@ -287,110 +472,161 @@ export default function FigmaHomePage() {
                 Book a Free Demo Class
               </Link>
             </div>
-            <div className="editorial-hero__highlights">
+            <div
+              className="editorial-hero__stats"
+              role="group"
+              aria-label="Delhi Law School institute achievements"
+            >
+              <p className="editorial-eyebrow">Delhi Law School at a glance</p>
+              <div className="editorial-hero__stats-grid">
+                <HeroExamStat value={50000} label="Students guided" />
+                <HeroExamStat value={1000} label="NLU selections" />
+                <HeroExamStat value={30} label="Years of teaching" />
+                <HeroExamStat value={500} label="Mock tests & practice sets" />
+              </div>
+            </div>
+            {/* <div className="editorial-hero__highlights">
               <p><Check size={13} aria-hidden="true" />Law faculty teaching CLAT and AILET subjects</p>
               <p><Check size={13} aria-hidden="true" />Online and classroom options for students across North India</p>
               <p><Check size={13} aria-hidden="true" />Free demo class and resources before you enrol</p>
-            </div>
+            </div> */}
           </div>
 
-          <div className="editorial-hero__image">
-            <Image
-              src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=85"
-              alt="University courtyard framed by historic architecture, illustrating a path toward law school"
-              fill
-              priority
-              sizes="(max-width: 800px) 100vw, 52vw"
-            />
-            <div className="editorial-image-note">
-              Learn to think.
-              <br />
-              Prepare to lead.
+          <div
+            className="editorial-hero__image"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Delhi Law School highlights"
+            onMouseEnter={() => setIsHeroCarouselPaused(true)}
+            onMouseLeave={() => setIsHeroCarouselPaused(false)}
+            onFocusCapture={() => setIsHeroCarouselPaused(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                setIsHeroCarouselPaused(false);
+              }
+            }}
+          >
+            {heroSlides.map((slide, index) => (
+              <Image
+                key={slide.image}
+                className={`editorial-hero__slide${index === activeHeroSlide ? " is-active" : ""}`}
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                sizes="(max-width: 800px) 100vw, 52vw"
+                aria-hidden={index !== activeHeroSlide}
+              />
+            ))}
+            <div className="editorial-image-note" aria-live="off">
+              {heroSlides[activeHeroSlide].caption}
+            </div>
+            <div className="editorial-hero__carousel-controls">
+              <button
+                type="button"
+                aria-label="Previous hero image"
+                onClick={() => showHeroSlide(activeHeroSlide - 1)}
+              >
+                <ChevronLeft size={18} aria-hidden="true" />
+              </button>
+              <div className="editorial-hero__carousel-dots" aria-label="Choose hero image">
+                {heroSlides.map((slide, index) => (
+                  <button
+                    key={slide.image}
+                    type="button"
+                    className={index === activeHeroSlide ? "is-active" : ""}
+                    aria-label={`Show image ${index + 1} of ${heroSlides.length}`}
+                    aria-pressed={index === activeHeroSlide}
+                    onClick={() => showHeroSlide(index)}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                aria-label="Next hero image"
+                onClick={() => showHeroSlide(activeHeroSlide + 1)}
+              >
+                <ChevronRight size={18} aria-hidden="true" />
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       <section className="editorial-programs" id="programs">
-        <div className="editorial-container">
-          <div className="editorial-programs__intro">
-            <div>
-              <p className="editorial-eyebrow">Our Programs · Choose your target exam</p>
-              <h2>CLAT and AILET Coaching Courses in Delhi</h2>
-              <p className="editorial-programs__summary">
-                Choose a course for your target exam and preparation stage.
-                Ask an advisor about available online and classroom batches.
+        <div className="editorial-container editorial-programs__content">
+          <div className="editorial-programs__header">
+            <div className="editorial-programs__heading">
+              <p className="editorial-eyebrow">Delhi Law School · CLAT and AILET preparation</p>
+              <h2>Prepare for CLAT and AILET with the right support.</h2>
+              <p>
+                Explore courses, faculty, batches, and practice resources for your law-entrance journey.
               </p>
-              <Link href="/courses" className="editorial-link editorial-link--small">
-                Talk to a Counsellor <ArrowUpRight size={14} aria-hidden="true" />
+            </div>
+            <div className="editorial-programs__actions">
+              <Link href="/enquiry" className="editorial-programs__button editorial-programs__button--outline">
+                Book a free demo class
+              </Link>
+              <Link href="/courses" className="editorial-programs__button editorial-programs__button--solid">
+                View courses <ArrowUpRight size={15} aria-hidden="true" />
+              </Link>
+              <Link href="/current-affairs" className="editorial-programs__offer-link">
+                Explore free study resources <ArrowRight size={14} aria-hidden="true" />
               </Link>
             </div>
-            <div className="editorial-programs__image">
-              <Image
-                src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=85"
-                alt="Books and reading materials arranged on a study table"
-                fill
-                sizes="(max-width: 800px) 100vw, 45vw"
-              />
-              <span>A little intentional beginning.</span>
-            </div>
           </div>
-
-          <div className="editorial-programs__bar">
-            <span>Find your starting point</span>
-            <span>CLAT · AILET · Law entrance preparation</span>
-          </div>
-          <div className="editorial-paths">
-            {pathways.map((pathway) => (
-              <article
-                className={`editorial-path${pathway.featured ? " editorial-path--featured" : ""}`}
-                key={pathway.number}
-              >
-                <span className="editorial-path__label">{pathway.label}</span>
-                <h3>{pathway.title}</h3>
-                <p>{pathway.description}</p>
-                <ul>
-                  {pathway.points.map((point) => (
-                    <li key={point}><Check size={13} aria-hidden="true" />{point}</li>
-                  ))}
-                </ul>
-                <Link className="editorial-path__link" href={pathway.href}>
-                  {pathway.link} <ArrowRight size={14} aria-hidden="true" />
-                </Link>
-              </article>
+          <div className="editorial-programs__highlights">
+            {programHighlights.map(({ title, description, href, icon: Icon }) => (
+              <Link className="editorial-programs__highlight" href={href} key={title}>
+                <span className="editorial-programs__icon">
+                  <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                </span>
+                <span className="editorial-programs__highlight-copy">
+                  <span className="editorial-programs__highlight-title">{title}</span>
+                  <span className="editorial-programs__highlight-description">{description}</span>
+                </span>
+                <ArrowRight className="editorial-programs__highlight-arrow" size={17} aria-hidden="true" />
+              </Link>
             ))}
           </div>
-          <p className="editorial-programs__note">
-            Not sure which course fits? Speak with a counsellor about your
-            target exam, preferred mode, and current preparation.
-            {" "}
-            <Link href="/enquiry">Book a free demo class</Link>
-          </p>
         </div>
       </section>
 
       <section className="editorial-approach" id="approach">
-        <div className="editorial-container editorial-approach__grid">
-          <div>
-            <p className="editorial-eyebrow">Why Delhi Law School</p>
-            <h2>Why Students Choose Delhi Law School for CLAT</h2>
+        <div className="editorial-container">
+          <div className="editorial-approach__header">
+            <div>
+              <p className="editorial-eyebrow">Why Delhi Law School</p>
+              <h2>Why Students Choose Delhi Law School for CLAT</h2>
+            </div>
+            <div className="editorial-approach__copy">
+              {/* <p>
+                CLAT preparation can become difficult to manage when resources
+                are scattered and there is no clear plan. A structured schedule,
+                focused practice, and faculty feedback can help you stay on track.
+              </p> */}
+              {/* <Link href="/about" className="editorial-text-link">
+                Learn about our approach <ArrowRight size={14} aria-hidden="true" />
+              </Link> */}
+            </div>
           </div>
-          <div className="editorial-approach__copy">
-            <p>
-              CLAT preparation can become difficult to manage when resources
-              are scattered and there is no clear plan. A structured schedule,
-              focused practice, and faculty feedback can help you stay on track.
-            </p>
-            <Link href="/about" className="editorial-text-link">
-              Learn about our approach <ArrowRight size={14} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-        <div className="editorial-container editorial-promise__grid">
-          <div><span>01</span><div><strong>Plan by preparation stage</strong><small>Build a routine around your class, exam goal, and available time.</small></div></div>
-          <div><span>02</span><div><strong>Practise all five CLAT areas</strong><small>Work on English, current affairs, legal and logical reasoning, and quantitative techniques.</small></div></div>
-          <div><span>03</span><div><strong>Review your practice</strong><small>Use mock attempts to spot patterns and decide what to revisit.</small></div></div>
-          <div><span>04</span><div><strong>Explore before enrolling</strong><small>Ask about a demo class, course format, and current batch details.</small></div></div>
+
+          <ol className="editorial-approach__steps">
+            {approachSteps.map((step, index) => (
+              <li className="editorial-approach__step" key={step.title}>
+                <span className="editorial-approach__marker" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <article className="editorial-approach__card">
+                  <p className="editorial-approach__step-label">
+                    Step {index + 1}
+                  </p>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </article>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -486,12 +722,52 @@ export default function FigmaHomePage() {
                 <Link href={article.href} className="editorial-article__image">
                   <Image src={article.image} alt={article.alt} fill sizes="(max-width: 700px) 100vw, 33vw" />
                 </Link>
-                <p className="editorial-eyebrow">{article.category}</p>
-                <h3><Link href={article.href}>{article.title}</Link></h3>
-                <p>{article.excerpt}</p>
-                <Link href={article.href} className="editorial-text-link">
-                  Read the guide <ArrowRight size={13} aria-hidden="true" />
+                <div className="editorial-article__body">
+                  <p className="editorial-eyebrow">{article.category}</p>
+                  <h3><Link href={article.href}>{article.title}</Link></h3>
+                  <p>{article.excerpt}</p>
+                  <Link href={article.href} className="editorial-text-link">
+                    Read the guide <ArrowRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="editorial-reading editorial-blog" aria-labelledby="editorial-blog-title">
+        <div className="editorial-container">
+          <div className="editorial-section-heading">
+            <div>
+              <p className="editorial-eyebrow">From current affairs</p>
+              <h2 id="editorial-blog-title">CLAT-focused reads to keep you informed.</h2>
+              <p>Explore current-affairs articles selected from our study archive.</p>
+            </div>
+            <Link href="/current-affairs" className="editorial-text-link">
+              Browse all current affairs <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="editorial-reading-grid">
+            {recentBlogPosts.map((article, index) => (
+              <article className="editorial-article" key={article.id}>
+                <Link href="/current-affairs" className="editorial-article__image">
+                  <Image
+                    src={recentBlogImages[index].image}
+                    alt={recentBlogImages[index].alt}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                  />
                 </Link>
+                <div className="editorial-article__body">
+                  <p className="editorial-eyebrow">{article.category}</p>
+                  <time className="editorial-blog__date">{article.date}</time>
+                  <h3><Link href="/current-affairs">{article.title}</Link></h3>
+                  <p>{article.excerpt}</p>
+                  <Link href="/current-affairs" className="editorial-text-link">
+                    Explore current affairs <ArrowRight size={13} aria-hidden="true" />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
@@ -502,11 +778,8 @@ export default function FigmaHomePage() {
         <div className="editorial-container">
           <div className="editorial-faq__heading">
             <p className="editorial-eyebrow">FAQs</p>
-            <h2>Common CLAT and AILET questions, answered.</h2>
-            <p>
-              Explore common questions about CLAT and AILET preparation,
-              programs, practice, and finding the right starting point.
-            </p>
+            <h2>Common CLAT and AILET questions.</h2>
+
             <Link href="/enquiry" className="editorial-text-link">
               Ask an advisor <ArrowRight size={14} aria-hidden="true" />
             </Link>
@@ -566,7 +839,7 @@ export default function FigmaHomePage() {
             </div>
             <form className="editorial-form" onSubmit={handleSubmit}>
               <label>
-                Full name <span>*</span>
+                Full name
                 <input
                   autoComplete="name"
                   name="name"
@@ -577,7 +850,7 @@ export default function FigmaHomePage() {
                 />
               </label>
               <label>
-                Email address <span>*</span>
+                Email address
                 <input
                   autoComplete="email"
                   name="email"
@@ -589,7 +862,7 @@ export default function FigmaHomePage() {
                 />
               </label>
               <label>
-                Phone number <span>*</span>
+                Phone number
                 <input
                   autoComplete="tel"
                   name="phone"
@@ -601,7 +874,7 @@ export default function FigmaHomePage() {
                 />
               </label>
               <label>
-                Target exam <span>*</span>
+                Target exam
                 <select name="exam" onChange={updateForm} required value={form.exam}>
                   <option value="">Select an exam</option>
                   <option value="CLAT">CLAT</option>
@@ -651,13 +924,13 @@ export default function FigmaHomePage() {
                 {submitting ? "Sending request…" : "Request a conversation"}
                 <ArrowRight size={15} aria-hidden="true" />
               </button>
-              <p className="editorial-form__fineprint">
-                No spam. Just a thoughtful first conversation.
+              {/* <p className="editorial-form__fineprint"> */}
+                {/* No spam. Just a thoughtful first conversation.
               </p>
               <div className="editorial-form__contact">
                 <a href={BUSINESS_CONTACT.phone.href}>{BUSINESS_CONTACT.phone.display}</a>
                 <a href={BUSINESS_CONTACT.email.href}>{BUSINESS_CONTACT.email.display}</a>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

@@ -92,7 +92,7 @@ export default function StatsSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-16 bg-white">
+    <section ref={ref} className="section-padding bg-white">
       <div className="container-custom">
         {/* Section label */}
         <motion.div

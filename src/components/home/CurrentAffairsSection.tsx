@@ -65,7 +65,7 @@ export default function CurrentAffairsSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="py-20 bg-white">
+    <section ref={ref} className="section-padding bg-white">
       <div className="container-custom">
         {/* Header */}
         <motion.div

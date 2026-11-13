@@ -31,7 +31,7 @@ export default function FacultySection() {
   return (
     <section className="section-padding band-surface" id="mentorship">
       <div className="container-custom">
-        <div className="text-center mb-10">
+        <div className="home-faculty__heading mb-10">
           <p className="text-xs font-semibold uppercase tracking-widest mb-2"
             style={{ color: "var(--color-gold)", fontFamily: "var(--font-inter)" }}>
             Faculty and teaching
